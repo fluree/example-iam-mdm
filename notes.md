@@ -33,9 +33,11 @@ I feel like most of the rules regarding transactions / queries can be applied on
 
 ### `contract` collection (only sales can transact / both can query)
 
-| Predicate | Type  | Options | Rule |
-| --------- | ----- | ------- | ---- |
-| amount    | float |         |      |
+| Predicate    | Type    | Options | Rule |
+| ------------ | ------- | ------- | ---- |
+| amount       | float   |         |      |
+| startDate    | instant |         |      |
+| deliverables | string  | multi   |      |
 
 ### `payment` collection (only accounting can transact, both can query)
 
