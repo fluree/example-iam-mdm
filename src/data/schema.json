@@ -1,0 +1,107 @@
+[
+  {
+    "_id": "_collection",
+    "name": "client",
+    "doc": "Data for clients"
+  },
+  {
+    "_id": "_collection",
+    "name": "bankAccount",
+    "doc": "banking information for clients' accounts"
+  },
+  {
+    "_id": "_collection",
+    "name": "contract",
+    "doc": "clients' contract data"
+  },
+  {
+    "_id": "_collection",
+    "name": "payment",
+    "doc": "individual payment data for clients"
+  },
+  {
+    "_id": "_predicate",
+    "name": "client/name",
+    "type": "string"
+  },
+  {
+    "_id": "_predicate",
+    "name": "client/email",
+    "type": "string",
+    "spec": [["_fn/name", "checkForValidEmail"]]
+  },
+  {
+    "_id": "_predicate",
+    "name": "client/dealStage",
+    "type": "tag"
+  },
+  {
+    "_id": "_predicate",
+    "name": "client/bankAccount",
+    "type": "ref",
+    "restrictCollection": "bankAccount",
+    "multi": true
+  },
+  {
+    "_id": "_predicate",
+    "name": "client/contract",
+    "type": "ref",
+    "restrictCollection": "contract"
+  },
+  {
+    "_id": "_predicate",
+    "name": "client/payment",
+    "type": "ref",
+    "multi": true,
+    "restrictCollection": "payment"
+  },
+  {
+    "_id": "_predicate",
+    "name": "bankAccount/routingNum",
+    "type": "int",
+    "unique": true
+  },
+  {
+    "_id": "_predicate",
+    "name": "bankAccount/accountNum",
+    "type": "int"
+  },
+  {
+    "_id": "_predicate",
+    "name": "bankAccount/owner",
+    "type": "ref",
+    "restrictCollection": "client"
+  },
+  {
+    "_id": "_predicate",
+    "name": "contract/amount",
+    "type": "float"
+  },
+  {
+    "_id": "_predicate",
+    "name": "contract/startDate",
+    "type": "instant"
+  },
+  {
+    "_id": "_predicate",
+    "name": "contract/deliverables",
+    "type": "string",
+    "multi": true
+  },
+  {
+    "_id": "_predicate",
+    "name": "payment/amount",
+    "type": "float"
+  },
+  {
+    "_id": "_predicate",
+    "name": "payment/bankAccount",
+    "type": "ref",
+    "restrictCollection": "bankAccount"
+  },
+  {
+    "_id": "_predicate",
+    "name": "payment/date",
+    "type": "instant"
+  }
+]
