@@ -103,5 +103,15 @@
     "_id": "_predicate",
     "name": "payment/date",
     "type": "instant"
+  },
+  {
+    "_id": "_role?accountant",
+    "id": "accountant",
+    "rules": [["_rule/id", "root"]]
+  },
+  {
+    "_id": "_role?marketer",
+    "id": "marketer",
+    "rules": [["_rule/id", "root"]]
   }
 ]
