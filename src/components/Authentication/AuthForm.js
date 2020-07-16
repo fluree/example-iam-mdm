@@ -39,7 +39,7 @@ function AuthForm(props) {
     email: "",
     password: "",
     passConfirm: "",
-    role: "customer",
+    role: "marketer",
   });
 
   const history = useHistory();
@@ -83,7 +83,7 @@ function AuthForm(props) {
       }
       if (authToken) {
         localStorage.setItem("authToken", authToken);
-        history.push("/books");
+        history.push("/dash");
       }
     } catch (err) {
       console.log(err);
@@ -132,14 +132,14 @@ function AuthForm(props) {
                 onChange={radioHandler}
               >
                 <FormControlLabel
-                  value="customer"
+                  value="marketer"
                   control={<Radio />}
-                  label="Customer"
+                  label="Marketer"
                 />
                 <FormControlLabel
-                  value="employee"
+                  value="accountant"
                   control={<Radio />}
-                  label="Employee"
+                  label="Accountant"
                 />
               </RadioGroup>
             </FormControl>
