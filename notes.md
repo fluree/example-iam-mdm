@@ -31,13 +31,14 @@ I feel like most of the rules regarding transactions / queries can be applied on
 | accountNum | int  |                                 | should this be hashed before storing? |
 | owner      | ref  | restrict to `client` collection |                                       |
 
-### `contract` collection (only sales can transact / both can query)
+### `contract` collection (only sales can transact / issuedBy `_user` can update / both can query)
 
-| Predicate    | Type    | Options | Rule |
-| ------------ | ------- | ------- | ---- |
-| amount       | float   |         |      |
-| startDate    | instant |         |      |
-| deliverables | string  | multi   |      |
+| Predicate    | Type    | Options                        | Rule |
+| ------------ | ------- | ------------------------------ | ---- |
+| amount       | float   |                                |      |
+| startDate    | instant |                                |      |
+| deliverables | string  | multi                          |      |
+| issuedBy     | ref     | restrict to `_user` collection |      |
 
 ### `payment` collection (only accounting can transact, both can query)
 

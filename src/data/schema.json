@@ -79,6 +79,12 @@
   },
   {
     "_id": "_predicate",
+    "name": "contract/issuedBy",
+    "type": "ref",
+    "restrictCollection": "_user"
+  },
+  {
+    "_id": "_predicate",
     "name": "contract/startDate",
     "type": "instant"
   },
