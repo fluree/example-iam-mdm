@@ -1,14 +1,14 @@
 import axios from "axios";
 
 const port = process.env.REACT_APP_FLUREE_PORT || 8080;
-const ledger = process.env.REACT_APP_FLUREE_LEDGER || "example/comics"
+const ledger = process.env.REACT_APP_FLUREE_LEDGER || "example/mdm";
 const url = `http://localhost:${port}/fdb/${ledger}`;
 
 const instance = axios.create({
   baseURL: url,
 });
 
-// Global error handling for axio request
+// Global error handling for axios request
 instance.interceptors.response.use(
   function (response) {
     return response;
@@ -85,17 +85,20 @@ export function flureeTransact(transactions) {
     });
 }
 
-// Check to see if "example/comics" db exists in Fluree ledger
+// Check to see if ledger db exists in Fluree ledger
 export function lookForDbs() {
   return axios
     .post(`http://localhost:${port}/fdb/dbs`)
     .then((res) => {
       // console.log("looking for dbs", res.data[0]);
       const database = res.data[0];
-      if (database.includes("example") && database.includes("comics")) {
+      const dbName = ledger.split("/");
+      if (database.length === dbName.length) {
+        for (let i in database) {
+          if (database[i] !== dbName[i]) return false;
+        }
         return true;
       }
-      return false;
     })
     .catch((err) => console.log(err, "Fluree DB not found"));
 }
@@ -116,10 +119,10 @@ export function registerFlureeUser(user) {
 }
 
 /**
- * 
+ *
  * @param {Object} user user data to retrieve JWT from Fluree password auth API
  *  link to "pw/login" docs: https://docs.flur.ee/api/downloaded-endpoints/downloaded-examples#-login
- * 
+ *
  */
 export function loginFlureeUser(user) {
   return instance
