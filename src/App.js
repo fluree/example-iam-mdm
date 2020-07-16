@@ -1,10 +1,8 @@
 import React, { useEffect } from "react";
 import { Switch, Route, useHistory, useLocation } from "react-router-dom";
 import jwt from "jsonwebtoken";
-import logo from "./logo.svg";
 import Dashboard from "./components/dashboard/Dashboard";
 import AuthForm from "./components/Authentication/AuthForm";
-import "./App.css";
 
 function App() {
   const history = useHistory();
