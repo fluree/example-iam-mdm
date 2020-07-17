@@ -40,7 +40,7 @@ export function flureeQuery(query) {
     return instance
       .post("/query", query, { headers: { Authorization: authHeader } })
       .then((res) => {
-        // console.log("flureeQuery", res);
+        console.log("flureeQuery", res);
         return res.data;
       })
       .catch((err) => err);
