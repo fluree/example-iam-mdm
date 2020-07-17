@@ -123,7 +123,9 @@
       ["_rule/id", "accountingPayment"],
       ["_rule/id", "accountingContract"],
       ["_rule/id", "accountingQueryClient"],
-      ["_rule/id", "accountingTransactClient"]
+      ["_rule/id", "accountingTransactClient"],
+      ["_rule/id", "canAccessAuth"],
+      ["_rule/id", "canAccessRoleName"]
     ]
   },
   {
@@ -134,7 +136,9 @@
       ["_rule/id", "salesTransactClient"],
       ["_rule/id", "salesNoBankAccess"],
       ["_rule/id", "salesPayment"],
-      ["_rule/id", "salesContract"]
+      ["_rule/id", "salesContract"],
+      ["_rule/id", "canAccessAuth"],
+      ["_rule/id", "canAccessRoleName"]
     ]
   }
 ]
