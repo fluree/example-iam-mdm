@@ -95,12 +95,6 @@
   },
   {
     "_id": "_predicate",
-    "name": "contract/issuedBy",
-    "type": "ref",
-    "restrictCollection": "_user"
-  },
-  {
-    "_id": "_predicate",
     "name": "payment/amount",
     "type": "float"
   },
@@ -119,7 +113,7 @@
     "_id": "_role?accounting",
     "id": "accounting",
     "rules": [
-      ["_rule/id", "accountantBankAccess"],
+      ["_rule/id", "accountingBankAccess"],
       ["_rule/id", "accountingPayment"],
       ["_rule/id", "accountingContract"],
       ["_rule/id", "accountingQueryClient"],
