@@ -37,6 +37,12 @@
   },
   {
     "_id": "_predicate",
+    "name": "client/account",
+    "type": "int",
+    "unique": true
+  },
+  {
+    "_id": "_predicate",
     "name": "client/bankAccount",
     "type": "ref",
     "restrictCollection": "bankAccount",
