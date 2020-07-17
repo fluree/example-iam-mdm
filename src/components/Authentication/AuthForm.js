@@ -39,7 +39,7 @@ function AuthForm(props) {
     email: "",
     password: "",
     passConfirm: "",
-    role: "marketer",
+    role: "sales",
   });
 
   const history = useHistory();
@@ -132,14 +132,14 @@ function AuthForm(props) {
                 onChange={radioHandler}
               >
                 <FormControlLabel
-                  value="marketer"
+                  value="sales"
                   control={<Radio />}
-                  label="Marketer"
+                  label="Sales"
                 />
                 <FormControlLabel
-                  value="accountant"
+                  value="accounting"
                   control={<Radio />}
-                  label="Accountant"
+                  label="Accounting"
                 />
               </RadioGroup>
             </FormControl>
