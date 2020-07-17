@@ -58,8 +58,7 @@
   {
     "_id": "_predicate",
     "name": "bankAccount/routingNum",
-    "type": "int",
-    "unique": true
+    "type": "int"
   },
   {
     "_id": "_predicate",
@@ -96,6 +95,12 @@
   },
   {
     "_id": "_predicate",
+    "name": "contract/issuedBy",
+    "type": "ref",
+    "restrictCollection": "_user"
+  },
+  {
+    "_id": "_predicate",
     "name": "payment/amount",
     "type": "float"
   },
@@ -111,13 +116,13 @@
     "type": "instant"
   },
   {
-    "_id": "_role?accountant",
-    "id": "accountant",
-    "rules": [["_rule/id", "root"]]
+    "_id": "_role?accounting",
+    "id": "accounting",
+    "rules": [
   },
   {
-    "_id": "_role?marketer",
-    "id": "marketer",
-    "rules": [["_rule/id", "root"]]
+    "_id": "_role?sales",
+    "id": "sales",
+    "rules": [["_rule/id", "salesNoBankAccess"],["_rule/id", "salesPayment"],["_rule/id", "salesQueryClient"], ["_rule/id", "salesTransactClient"]]
   }
 ]
