@@ -1,0 +1,92 @@
+[
+  {
+    "_id": "_rule#accountingQueryClient",
+    "id": "accountingQueryClient",
+    "doc": "Accountant basic query permissions for client collection",
+    "collection": "client",
+    "predicates": ["*"],
+    "fns": [["_fn/name", "true"]],
+    "ops": ["query"]
+  },
+  {
+    "_id": "_rule#accountingTransactClient",
+    "id": "accountingTransactClient",
+    "doc": "Accounting basic transaction permissions for client collection",
+    "collection": "client",
+    "predicates": ["name", "email", "account", "bankAccount", "payment"],
+    "fns": [["_fn/name", "true"]],
+    "ops": ["transact"]
+  },
+  {
+    "_id": "_rule#salesQueryClient",
+    "id": "salesQueryClient",
+    "doc": "Sales basic query permissions for client collection",
+    "collection": "client",
+    "predicates": ["name", "email", "account", "dealStage", "contract", "payment"],
+    "fns": [["_fn/name", "true"]],
+    "ops": ["query"]
+  },
+  {
+    "_id": "_rule#salesTransactClient",
+    "id": "salesTransactClient",
+    "doc": "Sales basic transaction for client collection",
+    "collection": "client",
+    "predicates": ["name", "email", "account", "dealStage", "contract"],
+    "fns": [["_fn/name", "true"]],
+    "ops": ["transact"]
+  },
+  {
+    "_id": "_rule#accountingBankAccess",
+    "id": "accountingBankAccess",
+    "doc": "Allows query / transact permissions for bankAccount collection",
+    "collection": "bankAccount",
+    "predicates": ["*"],
+    "fns": [["_fn/name", "true"]],
+    "ops": ["all"]
+  },
+  {
+    "_id": "_rule#salesNoBankAccess",
+    "id": "salesNoBankAccess",
+    "doc": "Explicitly forbids queries / transactions for bankAccount collection",
+    "collection": "bankAccount",
+    "predicates": ["*"],
+    "fns": [["_fn/name", "false"]],
+    "ops": ["all"]
+  },
+  {
+    "_id": "_rule#accountingContract",
+    "id": "accountingContract",
+    "doc": "Allows for query access to contract collection",
+    "collection": "contract",
+    "predicates": ["*"],
+    "fns": [["_fn/name", "true"]],
+    "ops": ["query"]
+  },
+  {
+    "_id": "_rule#salesContract",
+    "id": "salesContract",
+    "doc": "Allows for query / transact permission for contract collection",
+    "collection": "contract",
+    "predicates": ["*"],
+    "fns": [["_fn/name", "true"]],
+    "ops": ["all"]
+  },
+  {
+    "_id": "_rule#accountingPayment",
+    "id": "accountingPayment",
+    "doc": "Allows for full transaction / query access to payment collection",
+    "collection": "payment",
+    "predicates": ["*"],
+    "fns": [["_fn/name", "true"]],
+    "ops": ["all"]
+  },
+  {
+    "_id": "_rule#salesPayment",
+    "id": "salesPayment",
+    "doc": "Allows query access to payment collection",
+    "collection": "payment",
+    "predicates": ["*"],
+    "fns": [["_fn/name", "true"]],
+    "ops": ["query"]
+  }
+]
