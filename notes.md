@@ -27,7 +27,7 @@ I feel like most of the rules regarding transactions / queries can be applied on
 
 | Predicate  | Type | Options                         | Rule                                  |
 | ---------- | ---- | ------------------------------- | ------------------------------------- |
-| routingNum | int  | unique                          |                                       |
+| routingNum | int  |                                 |                                       |
 | accountNum | int  |                                 | should this be hashed before storing? |
 | owner      | ref  | restrict to `client` collection |                                       |
 
