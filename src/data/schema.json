@@ -12,7 +12,8 @@
   {
     "_id": "_collection",
     "name": "contract",
-    "doc": "clients' contract data"
+    "doc": "clients' contract data",
+    "spec": [["_fn/name", "isContractIssuedBy"]]
   },
   {
     "_id": "_collection",
@@ -125,7 +126,8 @@
       ["_rule/id", "accountingQueryClient"],
       ["_rule/id", "accountingTransactClient"],
       ["_rule/id", "canAccessAuth"],
-      ["_rule/id", "canAccessRoleName"]
+      ["_rule/id", "canAccessRoleName"],
+      ["_rule/id", "canAccessUsername"]
     ]
   },
   {
@@ -138,7 +140,8 @@
       ["_rule/id", "salesPayment"],
       ["_rule/id", "salesContract"],
       ["_rule/id", "canAccessAuth"],
-      ["_rule/id", "canAccessRoleName"]
+      ["_rule/id", "canAccessRoleName"],
+      ["_rule/id", "canAccessUsername"]
     ]
   }
 ]
