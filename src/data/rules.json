@@ -5,7 +5,10 @@
     "doc": "Accountant basic query permissions for client collection",
     "collection": "client",
     "predicates": ["*"],
-    "fns": [["_fn/name", "true"], ["_fn/name", "isClientCustomer"]],
+    "fns": [
+      ["_fn/name", "true"],
+      ["_fn/name", "isClientCustomer"]
+    ],
     "ops": ["query"]
   },
   {
@@ -36,13 +39,25 @@
     "ops": ["transact"]
   },
   {
-    "_id": "_rule$accountingBankAccess",
-    "id": "accountingBankAccess",
-    "doc": "Allows query / transact permissions for bankAccount collection",
+    "_id": "_rule$accountingBankQuery",
+    "id": "accountingBankQuery",
+    "doc": "Allows query permissions for bankAccount collection",
     "collection": "bankAccount",
     "predicates": ["*"],
     "fns": [["_fn/name", "true"]],
-    "ops": ["all"]
+    "ops": ["query"]
+  },
+  {
+    "_id": "_rule$accountingBankTransact",
+    "id": "accountingBankTransact",
+    "doc": "Allows transaction permissions for bankAccount collection.",
+    "collection": "bankAccount",
+    "predicates": ["*"],
+    "fns": [
+      ["_fn/name", "true"],
+      ["_fn/name", "canAddBankAccount"]
+    ],
+    "ops": ["transact"]
   },
   {
     "_id": "_rule$salesNoBankAccess",

@@ -13,5 +13,10 @@
     "_id": "_fn$isClientCustomer",
     "name": "isClientCustomer",
     "code": "(relationship? (?sid) [\"client/dealStage\"] [\"_tag/id\", \"client/dealStage:[\\\"customer\\\"]\"])"
+  },
+  {
+    "_id": "_fn$canAddBankAccount",
+    "name": "canAddBankAccount",
+    "code": "(relationship? (?sid) [\"bankAccount/owner\", \"client/dealStage\"] [\"_tag/id\", \"client/dealStage:[\\\"customer\\\"]\"])"
   }
 ]
