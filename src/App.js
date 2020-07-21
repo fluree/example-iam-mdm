@@ -1,15 +1,23 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useContext } from "react";
 import { Switch, Route, useHistory, useLocation } from "react-router-dom";
 import jwt from "jsonwebtoken";
 import Dashboard from "./components/dashboard/Dashboard";
 import AuthForm from "./components/Authentication/AuthForm";
+import { UserContext } from "./context/UserContext";
+import { flureeQuery } from "./utils/flureeFunctions";
 
 function App() {
   const history = useHistory();
   const location = useLocation();
+  const userState = useContext(UserContext);
+  console.log(userState)
 
   useEffect(() => {
-    if (location.pathname === "/login" || location.pathname === "/register" || userState.loggedIn) {
+    if (
+      location.pathname === "/login" ||
+      location.pathname === "/register" ||
+      userState.loggedIn
+    ) {
       return;
     }
     const token = localStorage.getItem("authToken");
@@ -54,13 +62,6 @@ function App() {
     }
   }, [userState.loggedIn]);
 
-  const logoutHandler = () => {
-    // localStorage.removeItem("authToken");
-    // setLoggedIn(false);
-    // setRole("");
-    // history.push("/login");
-    userState.logout("authToken");
-  };
 
   return (
     <div className="App">
