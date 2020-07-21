@@ -71,7 +71,8 @@ export function flureeTransact(transactions) {
       .then((res) => {
         // console.log(res);
         return res.data;
-      });
+      })
+      .catch((err) => err);
   }
   return instance
     .post(`/transact`, transactions)
@@ -128,10 +129,16 @@ export function loginFlureeUser(user) {
   return instance
     .post("/pw/login", user)
     .then((res) => {
-      const token = res.data;
-      return token;
+      console.log("status", res.status);
+      if (res.status === 200) {
+        const token = res.data;
+        return token;
+      }
+      throw "Invalid credentials";
     })
-    .catch((err) => err);
+    .catch((err) => {
+      throw err;
+    });
 }
 
 export default instance;

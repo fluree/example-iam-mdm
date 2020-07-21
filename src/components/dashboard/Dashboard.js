@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useContext, useState, useEffect } from "react";
+import { useHistory, useParams, Switch, Route } from "react-router-dom";
 import clsx from "clsx";
-import { useHistory } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Drawer from "@material-ui/core/Drawer";
@@ -19,9 +19,12 @@ import Link from "@material-ui/core/Link";
 import MenuIcon from "@material-ui/icons/Menu";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import { mainListItems, secondaryListItems } from "./listItems";
+import { flureeQuery } from "../../utils/flureeFunctions";
 import Chart from "./Chart";
 import Deposits from "./Deposits";
-import Orders from "./Orders";
+import Orders from "./Clients";
+import Client from "./Client";
+import { UserContext } from "../../context/UserContext";
 
 function Copyright() {
   return (
@@ -120,6 +123,27 @@ const useStyles = makeStyles((theme) => ({
 export default function Dashboard() {
   const classes = useStyles();
   const [open, setOpen] = React.useState(true);
+  const userState = useContext(UserContext);
+  const [clients, setClients] = useState([]);
+
+  useEffect(() => {
+    const clientsQuery = {
+      select: ["*"],
+      from: "client",
+      opts: {
+        compact: true,
+      },
+    };
+    flureeQuery(clientsQuery)
+      .then((res) => {
+        console.log(res);
+        setClients(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
+
   const handleDrawerOpen = () => {
     setOpen(true);
   };
@@ -190,24 +214,31 @@ export default function Dashboard() {
         <div className={classes.appBarSpacer} />
         <Container maxWidth="lg" className={classes.container}>
           <Grid container spacing={3}>
-            {/* Chart */}
+            {/* Chart
             <Grid item xs={12} md={8} lg={9}>
               <Paper className={fixedHeightPaper}>
                 <Chart />
               </Paper>
-            </Grid>
+            </Grid> */}
             {/* Recent Deposits */}
-            <Grid item xs={12} md={4} lg={3}>
+            {/* <Grid item xs={12} md={4} lg={3}>
               <Paper className={fixedHeightPaper}>
                 <Deposits />
               </Paper>
-            </Grid>
+            </Grid> */}
             {/* Recent Orders */}
-            <Grid item xs={12}>
-              <Paper className={classes.paper}>
-                <Orders />
-              </Paper>
-            </Grid>
+            <Switch>
+              <Route path="/">
+                <Grid item xs={12}>
+                  <Paper className={classes.paper}>
+                    <Orders clients={clients} />
+                  </Paper>
+                </Grid>
+              </Route>
+              <Route path="/client/:id">
+                <Client />
+              </Route>
+            </Switch>
           </Grid>
           <Box pt={4}>
             <Copyright />

@@ -5,7 +5,7 @@
     "doc": "Accountant basic query permissions for client collection",
     "collection": "client",
     "predicates": ["*"],
-    "fns": [["_fn/name", "true"]],
+    "fns": [["_fn/name", "true"], ["_fn/name", "isClientCustomer"]],
     "ops": ["query"]
   },
   {
@@ -22,14 +22,7 @@
     "id": "salesQueryClient",
     "doc": "Sales basic query permissions for client collection",
     "collection": "client",
-    "predicates": [
-      "name",
-      "email",
-      "account",
-      "dealStage",
-      "contract",
-      "payment"
-    ],
+    "predicates": ["*"],
     "fns": [["_fn/name", "true"]],
     "ops": ["query"]
   },
@@ -110,6 +103,15 @@
     "id": "canAccessRoleName",
     "doc": "Allows access to query user role",
     "collection": "_role",
+    "predicates": ["*"],
+    "fns": [["_fn/name", "true"]],
+    "ops": ["query"]
+  },
+  {
+    "_id": "_rule$canAccessUsername",
+    "id": "canAccessUsername",
+    "doc": "Allows a user to query the `username` predicate in `_user` collection",
+    "collection": "_user",
     "predicates": ["*"],
     "fns": [["_fn/name", "true"]],
     "ops": ["query"]
