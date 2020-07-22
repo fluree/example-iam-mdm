@@ -81,7 +81,8 @@
   {
     "_id": "_predicate",
     "name": "contract/amount",
-    "type": "float"
+    "type": "float",
+    "spec": [["_fn/name", "numMustBePositive"]]
   },
   {
     "_id": "_predicate",
