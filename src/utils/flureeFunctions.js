@@ -134,7 +134,6 @@ export function loginFlureeUser(user) {
         const token = res.data;
         return token;
       }
-      throw "Invalid credentials";
     })
     .catch((err) => {
       throw err;
