@@ -5,6 +5,11 @@
     "code": "(valid-email? (?o))"
   },
   {
+    "_id": "_fn$numMustBePositive",
+    "name": "numMustBePositive",
+    "code": "(> (?o) 0)"
+  },
+  {
     "_id": "_fn$isContractIssuedBy",
     "name": "isContractIssuedBy",
     "code": "(relationship? (?sid) [\"contract/issuedBy\" \"_user/auth\"] (?auth_id))"
