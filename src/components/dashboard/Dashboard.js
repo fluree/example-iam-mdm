@@ -1,5 +1,12 @@
 import React, { useContext, useState, useEffect } from "react";
-import { useHistory, useParams, Switch, Route } from "react-router-dom";
+import jwt from "jsonwebtoken";
+import {
+  useHistory,
+  useParams,
+  useRouteMatch,
+  Switch,
+  Route,
+} from "react-router-dom";
 import clsx from "clsx";
 import { makeStyles } from "@material-ui/core/styles";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -22,7 +29,7 @@ import { mainListItems, secondaryListItems } from "./listItems";
 import { flureeQuery } from "../../utils/flureeFunctions";
 import Chart from "./Chart";
 import Deposits from "./Deposits";
-import Orders from "./Clients";
+import Clients from "./Views/Clients";
 import Client from "./Client";
 import { UserContext } from "../../context/UserContext";
 
@@ -127,22 +134,30 @@ export default function Dashboard() {
   const [clients, setClients] = useState([]);
 
   useEffect(() => {
-    const clientsQuery = {
-      select: ["*"],
-      from: "client",
-      opts: {
-        compact: true,
-      },
-    };
-    flureeQuery(clientsQuery)
-      .then((res) => {
-        console.log(res);
-        setClients(res);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    if (!userState.user.username) {
+      const token = localStorage.getItem("authToken");
+      if (token) {
+        const { sub } = jwt.decode(token);
+        console.log("token subject", sub);
+        const userQuery = {
+          selectOne: [{ "_user/_auth": ["username"] }],
+          from: ["_auth/id", sub],
+          opts: {
+            compact: true,
+          },
+        };
+        flureeQuery(userQuery)
+          .then((user) => {
+            console.log(user);
+            userState.setInfo(user._user[0].username);
+          })
+          .catch((err) => {
+            return err;
+          });
+      }
+    }
   }, []);
+
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -153,10 +168,10 @@ export default function Dashboard() {
   const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
 
   const history = useHistory();
+  let { path, url } = useRouteMatch();
 
   const logoutHandler = () => {
-    localStorage.removeItem("authToken");
-    history.push("/login");
+    userState.logout("authToken");
   };
 
   return (
@@ -214,31 +229,16 @@ export default function Dashboard() {
         <div className={classes.appBarSpacer} />
         <Container maxWidth="lg" className={classes.container}>
           <Grid container spacing={3}>
-            {/* Chart
-            <Grid item xs={12} md={8} lg={9}>
-              <Paper className={fixedHeightPaper}>
-                <Chart />
+            <Paper>
+              <Typography component="h2">
+                Welcome {userState.user.username}
+              </Typography>
+            </Paper>
+            <Grid item xs={12}>
+              <Paper className={classes.paper}>
+                <Clients/>
               </Paper>
-            </Grid> */}
-            {/* Recent Deposits */}
-            {/* <Grid item xs={12} md={4} lg={3}>
-              <Paper className={fixedHeightPaper}>
-                <Deposits />
-              </Paper>
-            </Grid> */}
-            {/* Recent Orders */}
-            <Switch>
-              <Route path="/">
-                <Grid item xs={12}>
-                  <Paper className={classes.paper}>
-                    <Orders clients={clients} />
-                  </Paper>
-                </Grid>
-              </Route>
-              <Route path="/client/:id">
-                <Client />
-              </Route>
-            </Switch>
+            </Grid>
           </Grid>
           <Box pt={4}>
             <Copyright />
