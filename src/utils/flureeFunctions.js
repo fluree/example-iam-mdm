@@ -37,24 +37,19 @@ export function flureeQuery(query) {
   const token = localStorage.getItem("authToken");
   if (token) {
     const authHeader = "Bearer " + token;
-    return instance
-      .post("/query", query, { headers: { Authorization: authHeader } })
-      .then((res) => {
-        console.log("flureeQuery", res);
-        return res.data;
-      })
-      .catch((err) => err);
-  }
-  return instance
-    .post(`/query`, query)
-    .then((res) => {
-      // console.log("flureeQuery", res);
-      return res.data;
-    })
-    .catch((err) => {
-      // console.log(err);
-      return err;
+    return new Promise((resolve, reject) => {
+      instance
+        .post("/query", query, { headers: { Authorization: authHeader } })
+        .then((res) => resolve(res))
+        .catch((err) => reject(err));
     });
+  }
+  return new Promise((resolve, reject) => {
+    instance
+      .post(`/query`, query)
+      .then((res) => resolve(res))
+      .catch((err) => reject(err));
+  });
 }
 
 /**
@@ -64,26 +59,21 @@ export function flureeQuery(query) {
 export function flureeTransact(transactions) {
   const token = localStorage.getItem("authToken");
   if (token) {
-    return instance
-      .post("/transact", transactions, {
-        headers: { Authorization: `Bearer ${token}` },
-      })
-      .then((res) => {
-        // console.log(res);
-        return res.data;
-      })
-      .catch((err) => err);
-  }
-  return instance
-    .post(`/transact`, transactions)
-    .then((res) => {
-      // console.log(res);
-      return res.data;
-    })
-    .catch((err) => {
-      // console.log(err);
-      return err;
+    return new Promise((resolve, reject) => {
+      instance
+        .post("/transact", transactions, {
+          headers: { Authorization: `Bearer ${token}` },
+        })
+        .then((res) => resolve(res))
+        .catch((err) => reject(err));
     });
+  }
+  return new Promise((resolve, reject) => {
+    instance
+      .post(`/transact`, transactions)
+      .then((res) => resolve(res))
+      .catch((err) => reject(err));
+  });
 }
 
 // Check to see if ledger db exists in Fluree ledger
