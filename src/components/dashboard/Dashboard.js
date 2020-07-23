@@ -132,7 +132,7 @@ export default function Dashboard() {
   const [clients, setClients] = useState([]);
 
   useEffect(() => {
-    if (!userState.user.username) {
+    if (!userState.user) {
       const token = localStorage.getItem("authToken");
       if (token) {
         const { sub } = jwt.decode(token);
@@ -146,15 +146,15 @@ export default function Dashboard() {
         };
         flureeQuery(userQuery)
           .then((user) => {
-            console.log(user);
-            userState.setInfo(user._user[0].username);
+            console.log("user", user);
+            userState.setInfo(user.data._user[0].username);
           })
           .catch((err) => {
             return err;
           });
       }
     }
-  }, []);
+  }, [userState.user]);
 
 
   const handleDrawerOpen = () => {
@@ -227,11 +227,13 @@ export default function Dashboard() {
         <div className={classes.appBarSpacer} />
         <Container maxWidth="lg" className={classes.container}>
           <Grid container spacing={3}>
-            <Paper>
+          <Grid item xs={3}>
+            <Paper className={classes.paper}>
               <Typography component="h2">
-                Welcome {userState.user.username}
+                Welcome {userState.user}
               </Typography>
             </Paper>
+            </Grid>
             <Grid item xs={12}>
               <Paper className={classes.paper}>
                 <Clients/>
