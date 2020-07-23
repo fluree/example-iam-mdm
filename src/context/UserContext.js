@@ -5,7 +5,7 @@ export const UserContext = React.createContext();
 
 export default function UserInfo(props) {
   const [loggedIn, setLoggedIn] = useState(false);
-  const [user, setUser] = useState({ role: "", username: "" });
+  const [user, setUser] = useState("");
 
   const history = useHistory();
 
@@ -20,8 +20,8 @@ export default function UserInfo(props) {
     setLoggedIn(true);
   };
 
-  const setInfo = (role, username = "") => {
-    setUser({ role, username });
+  const setInfo = (username) => {
+    setUser(username);
   };
 
   return (
