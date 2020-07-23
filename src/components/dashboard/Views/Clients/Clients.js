@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { trackPromise, usePromiseTracker } from "react-promise-tracker";
-import { flureeQuery } from "../../../utils/flureeFunctions";
+import { flureeQuery } from "../../../../utils/flureeFunctions";
 import Link from "@material-ui/core/Link";
 import { makeStyles } from "@material-ui/core/styles";
 import Table from "@material-ui/core/Table";
@@ -9,8 +9,8 @@ import TableCell from "@material-ui/core/TableCell";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import CircularProgress from "@material-ui/core/CircularProgress";
-import Title from "../Tables/Title";
-import TableView from "../Tables/TableView";
+import Title from "../../Tables/Title";
+import TableView from "../../Tables/TableView";
 
 // Generate Order Data
 

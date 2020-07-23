@@ -27,10 +27,7 @@ import MenuIcon from "@material-ui/icons/Menu";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import { mainListItems, secondaryListItems } from "./listItems";
 import { flureeQuery } from "../../utils/flureeFunctions";
-import Chart from "./Chart";
-import Deposits from "./Deposits";
-import Clients from "./Views/Clients";
-import Client from "./Client";
+import Clients from "./Views/Clients/Clients";
 import { UserContext } from "../../context/UserContext";
 
 function Copyright() {
