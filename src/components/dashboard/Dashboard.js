@@ -28,6 +28,7 @@ import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import { mainListItems, secondaryListItems } from "./listItems";
 import { flureeQuery } from "../../utils/flureeFunctions";
 import Clients from "./Views/Clients/Clients";
+import BankAccounts from "./Views/BankAccounts";
 import { UserContext } from "../../context/UserContext";
 
 function Copyright() {
@@ -236,6 +237,7 @@ export default function Dashboard() {
                 <Clients/>
               </Paper>
             </Grid>
+                <BankAccounts />
           </Grid>
           <Box pt={4}>
             <Copyright />
