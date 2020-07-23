@@ -38,10 +38,6 @@ export default function TableView(props) {
             {props.columns.map((column) => (
               <TableCell key={column}>{column}</TableCell>
             ))}
-            {/* <TableCell>Account #</TableCell>
-            <TableCell>Name</TableCell>
-            <TableCell>Email</TableCell>
-            <TableCell>Stage</TableCell> */}
           </TableRow>
         </TableHead>
         <TableBody>
