@@ -154,7 +154,7 @@ export default function Dashboard() {
           });
       }
     }
-  }, [userState.user]);
+  }, [userState]);
 
 
   const handleDrawerOpen = () => {
