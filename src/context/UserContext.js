@@ -12,7 +12,7 @@ export default function UserInfo(props) {
   const logout = (key) => {
     localStorage.removeItem(key);
     setLoggedIn(false);
-    setInfo({ role: "", username: "" });
+    setInfo("");
     history.push("/login");
   };
 
