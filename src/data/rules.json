@@ -16,7 +16,7 @@
     "id": "accountingTransactClient",
     "doc": "Accounting basic transaction permissions for client collection",
     "collection": "client",
-    "predicates": ["name", "email", "account", "bankAccount", "payment"],
+    "predicates": ["client/name", "client/email", "client/account", "client/bankAccount", "client/payment"],
     "fns": [["_fn/name", "true"]],
     "ops": ["transact"]
   },
@@ -34,7 +34,7 @@
     "id": "salesTransactClient",
     "doc": "Sales basic transaction for client collection",
     "collection": "client",
-    "predicates": ["name", "email", "account", "dealStage", "contract"],
+    "predicates": ["client/name", "client/email", "client/account", "client/dealStage", "client/contract"],
     "fns": [["_fn/name", "true"]],
     "ops": ["transact"]
   },
@@ -130,5 +130,14 @@
     "predicates": ["*"],
     "fns": [["_fn/name", "true"]],
     "ops": ["query"]
+  },
+  {
+    "_id": "_rule$canCreateTag",
+    "id": "canCreateTag",
+    "doc": "Allows a user to create a new tag",
+    "collection": "_tag",
+    "predicates": ["*"],
+    "fns": [["_fn/name", "true"]],
+    "ops": ["transact"]
   }
 ]

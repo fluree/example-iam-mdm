@@ -129,7 +129,8 @@
       ["_rule/id", "accountingTransactClient"],
       ["_rule/id", "canAccessAuth"],
       ["_rule/id", "canAccessRoleName"],
-      ["_rule/id", "canAccessUsername"]
+      ["_rule/id", "canAccessUsername"],
+      ["_rule/id", "canCreateTag"]
     ]
   },
   {
@@ -143,7 +144,8 @@
       ["_rule/id", "salesContract"],
       ["_rule/id", "canAccessAuth"],
       ["_rule/id", "canAccessRoleName"],
-      ["_rule/id", "canAccessUsername"]
+      ["_rule/id", "canAccessUsername"],
+      ["_rule/id", "canCreateTag"]
     ]
   }
 ]
