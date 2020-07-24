@@ -21,15 +21,14 @@ import Divider from "@material-ui/core/Divider";
 import IconButton from "@material-ui/core/IconButton";
 import Container from "@material-ui/core/Container";
 import Grid from "@material-ui/core/Grid";
-import Paper from "@material-ui/core/Paper";
 import Link from "@material-ui/core/Link";
 import MenuIcon from "@material-ui/icons/Menu";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
-import { mainListItems, secondaryListItems } from "./listItems";
+import { MainListItems, secondaryListItems } from "./listItems";
+import Overview from "./Views/Overview";
 import { flureeQuery } from "../../utils/flureeFunctions";
-import Clients from "./Views/Clients/Clients";
-import BankAccounts from "./Views/BankAccounts";
 import { UserContext } from "../../context/UserContext";
+import Clients from "./Views/Clients/Clients";
 
 function Copyright() {
   return (
@@ -129,7 +128,6 @@ export default function Dashboard() {
   const classes = useStyles();
   const [open, setOpen] = React.useState(true);
   const userState = useContext(UserContext);
-  const [clients, setClients] = useState([]);
 
   useEffect(() => {
     if (!userState.user) {
@@ -156,7 +154,6 @@ export default function Dashboard() {
     }
   }, [userState]);
 
-
   const handleDrawerOpen = () => {
     setOpen(true);
   };
@@ -166,7 +163,7 @@ export default function Dashboard() {
   const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
 
   const history = useHistory();
-  let { path, url } = useRouteMatch();
+  let { path } = useRouteMatch();
 
   const logoutHandler = () => {
     userState.logout("authToken");
@@ -219,27 +216,22 @@ export default function Dashboard() {
           </IconButton>
         </div>
         <Divider />
-        <List>{mainListItems}</List>
-        <Divider />
-        <List>{secondaryListItems}</List>
+        <List>
+          <MainListItems />
+        </List>
       </Drawer>
       <main className={classes.content}>
         <div className={classes.appBarSpacer} />
         <Container maxWidth="lg" className={classes.container}>
           <Grid container spacing={3}>
-          <Grid item xs={3}>
-            <Paper className={classes.paper}>
-              <Typography component="h2">
-                Welcome {userState.user}
-              </Typography>
-            </Paper>
-            </Grid>
-            <Grid item xs={12}>
-              <Paper className={classes.paper}>
-                <Clients/>
-              </Paper>
-            </Grid>
-                <BankAccounts />
+            <Switch>
+              <Route exact path={`${path}/`}>
+                <Overview />
+              </Route>
+              <Route exact path={`${path}/clients`}>
+                <Clients />
+              </Route>
+            </Switch>
           </Grid>
           <Box pt={4}>
             <Copyright />
