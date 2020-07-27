@@ -29,6 +29,9 @@ import Overview from "./Views/Overview";
 import { flureeQuery } from "../../utils/flureeFunctions";
 import { UserContext } from "../../context/UserContext";
 import Clients from "./Views/Clients/Clients";
+import BankAccounts from "./Views/BankAccounts/BankAccounts";
+import Contracts from "./Views/Contracts/Contracts";
+import Payments from "./Views/Payments/Payments";
 
 function Copyright() {
   return (
@@ -230,6 +233,15 @@ export default function Dashboard() {
               </Route>
               <Route exact path={`${path}/clients`}>
                 <Clients />
+              </Route>
+              <Route exact path={`${path}/accounts`}>
+                <BankAccounts />
+              </Route>
+              <Route exact path={`${path}/contracts`}>
+                <Contracts />
+              </Route>
+              <Route exact path={`${path}/payments`}>
+                <Payments />
               </Route>
             </Switch>
           </Grid>
