@@ -21,8 +21,6 @@ const useStyles = makeStyles((theme) => ({
 export default function Clients() {
   const classes = useStyles();
   const { path } = useRouteMatch();
-
-  const [showForm, setShowForm] = useState(false);
   const [clients, setClients] = useState([]);
 
   const { promiseInProgress } = usePromiseTracker();
