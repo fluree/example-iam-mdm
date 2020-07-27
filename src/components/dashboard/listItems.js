@@ -1,18 +1,19 @@
-import React from "react";
+import React, { useContext } from "react";
 import { useHistory } from "react-router-dom";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 import ListSubheader from "@material-ui/core/ListSubheader";
 import DashboardIcon from "@material-ui/icons/Dashboard";
-import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
 import PeopleIcon from "@material-ui/icons/People";
-import BarChartIcon from "@material-ui/icons/BarChart";
-import LayersIcon from "@material-ui/icons/Layers";
+import AccountBalanceIcon from "@material-ui/icons/AccountBalance";
 import AssignmentIcon from "@material-ui/icons/Assignment";
+import LocalAtmIcon from "@material-ui/icons/LocalAtm";
+import { UserContext } from "../../context/UserContext";
 
 export function MainListItems() {
   const history = useHistory();
+  const userState = useContext(UserContext);
 
   return (
     <div>
@@ -28,23 +29,25 @@ export function MainListItems() {
         </ListItemIcon>
         <ListItemText primary="Clients" />
       </ListItem>
-      <ListItem button>
+      {userState.role === "accounting" && (
+        <ListItem button onClick={() => history.push("dash/accounts")}>
+          <ListItemIcon>
+            <AccountBalanceIcon />
+          </ListItemIcon>
+          <ListItemText primary="Bank Accounts" />
+        </ListItem>
+      )}
+      <ListItem button onClick={() => history.push("dash/contracts")}>
         <ListItemIcon>
-          <ShoppingCartIcon />
+          <AssignmentIcon />
         </ListItemIcon>
-        <ListItemText primary="Orders" />
+        <ListItemText primary="Contracts" />
       </ListItem>
-      <ListItem button>
+      <ListItem button onClick={() => history.push("dash/payments")}>
         <ListItemIcon>
-          <BarChartIcon />
+          <LocalAtmIcon />
         </ListItemIcon>
-        <ListItemText primary="Reports" />
-      </ListItem>
-      <ListItem button>
-        <ListItemIcon>
-          <LayersIcon />
-        </ListItemIcon>
-        <ListItemText primary="Integrations" />
+        <ListItemText primary="Payments" />
       </ListItem>
     </div>
   );
