@@ -50,8 +50,7 @@ export default function Contracts() {
       .catch((err) => {
         console.log(err);
       });
-
-  }
+  };
 
   return (
     <React.Fragment>
@@ -88,11 +87,4 @@ export default function Contracts() {
       )}
     </React.Fragment>
   );
-
-  // if (accounts.length === 0) {
-  //   return null;
-  // } else {
-  //   return (
-  //   );
-  // }
 }
