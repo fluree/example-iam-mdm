@@ -2,9 +2,9 @@ import React, { useState, useEffect } from "react";
 import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
 import { makeStyles } from "@material-ui/core/styles";
-import TableView from "../Tables/TableView";
+import TableView from "../../Tables/TableView";
 
-import { flureeQuery } from "../../../utils/flureeFunctions";
+import { flureeQuery } from "../../../../utils/flureeFunctions";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -48,16 +48,12 @@ export default function BankAccounts() {
   return (
     <React.Fragment>
       {accounts.length === 0 ? null : (
-        <Grid item xs={12}>
-          <Paper className={classes.paper}>
             <TableView
               title="Bank Accounts"
               data={accounts}
               columns={["ID", "Owner", "Routing", "Account"]}
               values={["_id", "owner", "routingNum", "accountNum"]}
             />
-          </Paper>
-        </Grid>
       )}
     </React.Fragment>
   );
