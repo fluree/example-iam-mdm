@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from "react";
+import { useRouteMatch } from "react-router-dom";
 import TableView from "./TableView";
 import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
 import { makeStyles } from "@material-ui/core/styles";
 import { flureeQuery } from "../../utils/flureeFunctions";
+import AddPayment from "../Forms/AddPayment";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -17,8 +19,9 @@ const useStyles = makeStyles((theme) => ({
 export default function Payments() {
   const classes = useStyles();
   const [payments, setPayments] = useState([]);
+  const { path } = useRouteMatch();
 
-  useEffect(() => {
+  const fetchPayments = () => {
     const paymentQuery = {
       select: ["*", { bankAccount: ["_id"] }],
       from: "payment",
@@ -45,6 +48,10 @@ export default function Payments() {
       .catch((err) => {
         console.log(err);
       });
+  };
+
+  useEffect(() => {
+    fetchPayments();
   }, []);
 
   return (
@@ -58,6 +65,13 @@ export default function Payments() {
               columns={["Payment ID", "Amount", "Account ID", "Date"]}
               values={["_id", "amount", "accountID", "displayDate"]}
             />
+          </Paper>
+        </Grid>
+      )}
+      {path === "/dash/payments" && (
+        <Grid item xs={12}>
+          <Paper className={classes.paper}>
+            <AddPayment fetch={fetchPayments} />
           </Paper>
         </Grid>
       )}
