@@ -16,7 +16,7 @@
     "id": "accountingTransactClient",
     "doc": "Accounting basic transaction permissions for client collection",
     "collection": "client",
-    "predicates": ["client/name", "client/email", "client/account", "client/bankAccount", "client/payment"],
+    "predicates": ["client/name", "client/email", "client/account", "client/bankAccount", "client/payment", "client/dealStage"],
     "fns": [["_fn/name", "true"]],
     "ops": ["transact"]
   },
