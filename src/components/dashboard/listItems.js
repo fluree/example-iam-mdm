@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { useHistory } from "react-router-dom";
+import { useHistory, useRouteMatch } from "react-router-dom";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
@@ -14,36 +14,37 @@ import { UserContext } from "../../context/UserContext";
 export function MainListItems() {
   const history = useHistory();
   const userState = useContext(UserContext);
+  const { url } = useRouteMatch();
 
   return (
     <div>
-      <ListItem button onClick={() => history.push("/dash")}>
+      <ListItem button onClick={() => history.push(`/dash`)}>
         <ListItemIcon>
           <DashboardIcon />
         </ListItemIcon>
         <ListItemText primary="Dashboard" />
       </ListItem>
-      <ListItem button onClick={() => history.push("dash/clients")}>
+      <ListItem button onClick={() => history.push(`${url}/clients`)}>
         <ListItemIcon>
           <PeopleIcon />
         </ListItemIcon>
         <ListItemText primary="Clients" />
       </ListItem>
       {userState.role === "accounting" && (
-        <ListItem button onClick={() => history.push("dash/accounts")}>
+        <ListItem button onClick={() => history.push(`${url}/accounts`)}>
           <ListItemIcon>
             <AccountBalanceIcon />
           </ListItemIcon>
           <ListItemText primary="Bank Accounts" />
         </ListItem>
       )}
-      <ListItem button onClick={() => history.push("dash/contracts")}>
+      <ListItem button onClick={() => history.push(`${url}/contracts`)}>
         <ListItemIcon>
           <AssignmentIcon />
         </ListItemIcon>
         <ListItemText primary="Contracts" />
       </ListItem>
-      <ListItem button onClick={() => history.push("dash/payments")}>
+      <ListItem button onClick={() => history.push(`${url}/payments`)}>
         <ListItemIcon>
           <LocalAtmIcon />
         </ListItemIcon>
