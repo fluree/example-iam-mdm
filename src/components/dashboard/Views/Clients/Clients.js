@@ -6,15 +6,17 @@ import { makeStyles } from "@material-ui/core/styles";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import TableView from "../../Tables/TableView";
 import AddClient from "./AddClient";
-import Title from "../../../Title";
+import Grid from "@material-ui/core/Grid";
+import Paper from "@material-ui/core/Paper";
 
-// Generate Order Data
-
-function preventDefault(event) {
-  event.preventDefault();
-}
-
-const useStyles = makeStyles((theme) => ({}));
+const useStyles = makeStyles((theme) => ({
+  paper: {
+    padding: theme.spacing(2),
+    display: "flex",
+    overflow: "auto",
+    flexDirection: "column",
+  },
+}));
 
 export default function Clients() {
   const classes = useStyles();
@@ -56,14 +58,24 @@ export default function Clients() {
       {promiseInProgress === true ? (
         <CircularProgress />
       ) : (
-        <TableView
-          title="Clients"
-          data={clients}
-          columns={["Account #", "Name", "Email", "Stage"]}
-          values={["account", "name", "email", "dealStage"]}
-        />
+        <Grid item xs={12}>
+          <Paper className={classes.paper}>
+            <TableView
+              title="Clients"
+              data={clients}
+              columns={["Account #", "Name", "Email", "Stage"]}
+              values={["account", "name", "email", "dealStage"]}
+            />
+          </Paper>
+        </Grid>
       )}
-      {path === "/dash/clients" && <AddClient />}
+      {path === "/dash/clients" && (
+        <Grid item xs={12}>
+          <Paper className={classes.paper}>
+            <AddClient />
+          </Paper>
+        </Grid>
+      )}
     </React.Fragment>
   );
 }

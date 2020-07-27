@@ -7,6 +7,7 @@ import { UserContext } from "../../../context/UserContext";
 import Clients from "./Clients/Clients";
 import BankAccounts from "./BankAccounts/BankAccounts";
 import Contracts from "./Contracts/Contracts";
+import Payments from "./Payments/Payments";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -23,21 +24,10 @@ export default function Overview() {
 
   return (
     <React.Fragment>
-      <Grid item xs={12}>
-        <Paper className={classes.paper}>
-          <Clients />
-        </Paper>
-      </Grid>
-      <Grid item xs={12}>
-        <Paper className={classes.paper}>
-          <BankAccounts />
-        </Paper>
-      </Grid>
-      <Grid item xs={12}>
-        <Paper className={classes.paper}>
-          <Contracts />
-        </Paper>
-      </Grid>
+      <Clients />
+      <BankAccounts />
+      <Contracts />
+      <Payments />
     </React.Fragment>
   );
 }

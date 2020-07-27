@@ -7,6 +7,7 @@ import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
 import IconButton from "@material-ui/core/IconButton";
 import AddIcon from "@material-ui/icons/Add";
+import Title from "../../../Title";
 import { flureeTransact } from "../../../../utils/flureeFunctions";
 
 const useStyles = makeStyles((theme) => ({
@@ -62,6 +63,7 @@ export default function AddClient() {
 
   return (
     <React.Fragment>
+      <Title>Add Client</Title>
       <form className={classes.root} onSubmit={submitHandler}>
         <TextField
           name="account"

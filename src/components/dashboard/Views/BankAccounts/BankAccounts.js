@@ -48,12 +48,16 @@ export default function BankAccounts() {
   return (
     <React.Fragment>
       {accounts.length === 0 ? null : (
+        <Grid item xs={12}>
+          <Paper className={classes.paper}>
             <TableView
               title="Bank Accounts"
               data={accounts}
               columns={["ID", "Owner", "Routing", "Account"]}
               values={["_id", "owner", "routingNum", "accountNum"]}
             />
+          </Paper>
+        </Grid>
       )}
     </React.Fragment>
   );

@@ -15,7 +15,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function BankAccounts() {
+export default function Contracts() {
   const [contracts, setContracts] = useState([]);
   const classes = useStyles();
 
@@ -29,7 +29,7 @@ export default function BankAccounts() {
     };
     flureeQuery(contractQuery)
       .then((res) => {
-        console.log("bank", res);
+        console.log("contract", res);
         const flatContracts = res.data.map((contract) => {
           return {
             _id: contract._id,
@@ -49,12 +49,28 @@ export default function BankAccounts() {
   return (
     <React.Fragment>
       {contracts.length === 0 ? null : (
-        <TableView
-          title="Contracts"
-          data={contracts}
-          columns={["ID", "Start Date", "Amount", "Issued By", "Deliverables"]}
-          values={["_id", "startDate", "amount", "issuedBy", "deliverables"]}
-        />
+        <Grid item xs={12}>
+          <Paper className={classes.paper}>
+            <TableView
+              title="Contracts"
+              data={contracts}
+              columns={[
+                "ID",
+                "Start Date",
+                "Amount",
+                "Issued By",
+                "Deliverables",
+              ]}
+              values={[
+                "_id",
+                "startDate",
+                "amount",
+                "issuedBy",
+                "deliverables",
+              ]}
+            />
+          </Paper>
+        </Grid>
       )}
     </React.Fragment>
   );
