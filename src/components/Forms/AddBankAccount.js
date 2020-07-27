@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import FormControl from "@material-ui/core/FormControl";
@@ -7,12 +7,8 @@ import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
 import IconButton from "@material-ui/core/IconButton";
 import AddIcon from "@material-ui/icons/Add";
-import DateFnsUtils from "@date-io/date-fns";
-import enLocale from "date-fns/locale/en-US";
-import { DatePicker, MuiPickersUtilsProvider } from "@material-ui/pickers";
-import Title from "../../../Title";
-import { flureeQuery, flureeTransact } from "../../../../utils/flureeFunctions";
-import { UserContext } from "../../../../context/UserContext";
+import Title from "../Title";
+import { flureeTransact, flureeQuery } from "../../utils/flureeFunctions";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -26,22 +22,21 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Addcontract(props) {
+export default function AddBankAccount() {
   const classes = useStyles();
-  const user = useContext(UserContext);
-  const [startDate, setStart] = useState(new Date());
-
   const [clients, setClients] = useState([]);
-
   const [form, setForm] = useState({
-    client: clients[0] || 0,
-    amount: "",
-    startDate: "",
-    deliverables: "",
+    owner: clients[0] || "",
+    accountNum: "",
+    routingNum: "",
   });
 
-
-  const [error, setError] = useState("");
+  const changeHandler = (e) => {
+    setForm({
+      ...form,
+      [e.target.name]: e.target.value,
+    });
+  };
 
   useEffect(() => {
     if (clients.length === 0) {
@@ -60,57 +55,36 @@ export default function Addcontract(props) {
     }
   }, [clients]);
 
-  const changeHandler = (e) => {
-    setForm({
-      ...form,
-      [e.target.name]: e.target.value,
-    });
-  };
-
   const submitHandler = (e) => {
     e.preventDefault();
-    const newcontract = [
+    const newAccount = [
       {
-        _id: "contract$new",
-        amount: parseFloat(form.amount),
-        startDate: Date.parse(startDate),
-        deliverables: form.deliverables.split(","),
-        issuedBy: user.user.id,
-      },
-      {
-        _id: form.client,
-        "client/contract": "contract$new",
+        _id: "bankAccount#new",
+        owner: form.owner,
+        accountNum: parseInt(form.accountNum),
+        routingNum: parseInt(form.routingNum),
       },
     ];
-    flureeTransact(newcontract)
+    flureeTransact(newAccount)
       .then((res) => {
-        console.log(res);
-        props.fetch();
-        setForm({
-          amount: "",
-          startDate: "",
-          deliverables: "",
-        });
+        console.log("add bank", res);
       })
       .catch((err) => {
-        console.log(err);
+        console.log("add bank", err);
       });
   };
 
   return (
     <React.Fragment>
-      <Title>Add Contract</Title>
+      <Title>Add Bank Account</Title>
       <form className={classes.root} onSubmit={submitHandler}>
-        <MuiPickersUtilsProvider utils={DateFnsUtils}>
-          <DatePicker label="StartDate" value={startDate} onChange={setStart} />
-        </MuiPickersUtilsProvider>
         <FormControl className={classes.formControl}>
-          <InputLabel id="stage-label">Client</InputLabel>
+          <InputLabel id="stage-label">Owner</InputLabel>
           <Select
             labelId="stage-label"
             id="client-stage-select"
-            name="client"
-            value={form.client}
+            name="owner"
+            value={form.owner}
             onChange={changeHandler}
           >
             {clients.length === 0
@@ -123,15 +97,15 @@ export default function Addcontract(props) {
           </Select>
         </FormControl>
         <TextField
-          name="amount"
-          label="Amount ($)"
-          value={form.amount}
+          name="accountNum"
+          label="Account Number"
+          value={form.accountNum}
           onChange={changeHandler}
         />
         <TextField
-          name="deliverables"
-          label="Deliverables"
-          value={form.deliverables}
+          name="routingNum"
+          label="Routing Number"
+          value={form.routingNum}
           onChange={changeHandler}
         />
         <IconButton className={classes.submitButton} type="submit">

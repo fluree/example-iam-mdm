@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
-import TableView from "../../Tables/TableView";
+import TableView from "./TableView";
 import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
 import { makeStyles } from "@material-ui/core/styles";
-import { flureeQuery } from "../../../../utils/flureeFunctions";
+import { flureeQuery } from "../../utils/flureeFunctions";
 
 const useStyles = makeStyles((theme) => ({
   paper: {

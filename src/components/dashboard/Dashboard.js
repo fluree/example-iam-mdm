@@ -2,7 +2,6 @@ import React, { useContext, useState, useEffect } from "react";
 import jwt from "jsonwebtoken";
 import {
   useHistory,
-  useParams,
   useRouteMatch,
   Switch,
   Route,
@@ -24,14 +23,14 @@ import Grid from "@material-ui/core/Grid";
 import Link from "@material-ui/core/Link";
 import MenuIcon from "@material-ui/icons/Menu";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
-import { MainListItems, secondaryListItems } from "./listItems";
-import Overview from "./Views/Overview";
+import { MainListItems } from "./listItems";
+import Overview from "./Overview";
 import { flureeQuery } from "../../utils/flureeFunctions";
 import { UserContext } from "../../context/UserContext";
-import Clients from "./Views/Clients/Clients";
-import BankAccounts from "./Views/BankAccounts/BankAccounts";
-import Contracts from "./Views/Contracts/Contracts";
-import Payments from "./Views/Payments/Payments";
+import Clients from "../Tables/Clients";
+import BankAccounts from "../Tables/BankAccounts";
+import Contracts from "../Tables/Contracts";
+import Payments from "../Tables/Payments";
 
 function Copyright() {
   return (

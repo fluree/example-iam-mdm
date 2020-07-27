@@ -3,10 +3,9 @@ import {useRouteMatch} from "react-router-dom";
 import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
 import { makeStyles } from "@material-ui/core/styles";
-import TableView from "../../Tables/TableView";
-import AddBankAccount from "./AddBankAccount";
-
-import { flureeQuery } from "../../../../utils/flureeFunctions";
+import TableView from "./TableView";
+import AddBankAccount from "../Forms/AddBankAccount";
+import { flureeQuery } from "../../utils/flureeFunctions";
 
 const useStyles = makeStyles((theme) => ({
   paper: {

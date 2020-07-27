@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { useRouteMatch } from "react-router-dom";
 import { trackPromise, usePromiseTracker } from "react-promise-tracker";
-import { flureeQuery } from "../../../../utils/flureeFunctions";
+import { flureeQuery } from "../../utils/flureeFunctions";
 import { makeStyles } from "@material-ui/core/styles";
 import CircularProgress from "@material-ui/core/CircularProgress";
-import TableView from "../../Tables/TableView";
-import AddClient from "./AddClient";
+import TableView from "./TableView";
+import AddClient from "../Forms/AddClient";
 import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
 
