@@ -70,7 +70,7 @@ export default function Clients() {
       {path === "/dash/clients" && (
         <Grid item xs={12}>
           <Paper className={classes.paper}>
-            <AddClient />
+            <AddClient fetch={fetchClients}/>
           </Paper>
         </Grid>
       )}

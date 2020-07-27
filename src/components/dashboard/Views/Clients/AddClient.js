@@ -22,7 +22,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function AddClient() {
+export default function AddClient(props) {
   const classes = useStyles();
 
   const [client, setClient] = useState({
@@ -55,6 +55,8 @@ export default function AddClient() {
     flureeTransact(newClient)
       .then((res) => {
         console.log(res);
+        props.fetch();
+        setClient({ account: "", name: "", email: "", stage: "" });
       })
       .catch((err) => {
         console.log(err);
