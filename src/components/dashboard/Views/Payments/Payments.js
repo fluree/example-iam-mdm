@@ -30,19 +30,22 @@ export default function Payments() {
       .then((res) => {
         console.log("payment", res);
         const flatPayments = res.data.map((payment) => {
+          const displayDate = new Date(payment.date);
           return {
             _id: payment._id,
             amount: payment.amount,
             accountID: payment.bankAccount._id,
-            date: payment.date
-          }
-        })
-        setPayments(flatPayments)
+            displayDate: displayDate.toDateString(),
+            date: payment.date,
+          };
+        });
+        console.log("paymentdata", flatPayments);
+        setPayments(flatPayments);
       })
       .catch((err) => {
         console.log(err);
       });
-  });
+  }, []);
 
   return (
     <React.Fragment>
@@ -53,7 +56,7 @@ export default function Payments() {
               title="Payments"
               data={payments}
               columns={["Payment ID", "Amount", "Account ID", "Date"]}
-              values={["_id", "amount", "accountID", "date"]}
+              values={["_id", "amount", "accountID", "displayDate"]}
             />
           </Paper>
         </Grid>
