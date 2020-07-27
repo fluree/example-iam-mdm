@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
+import { useRouteMatch } from "react-router-dom";
 import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
 import { makeStyles } from "@material-ui/core/styles";
 import TableView from "../../Tables/TableView";
-
+import AddContract from "./AddContract";
 import { flureeQuery } from "../../../../utils/flureeFunctions";
 
 const useStyles = makeStyles((theme) => ({
@@ -18,8 +19,13 @@ const useStyles = makeStyles((theme) => ({
 export default function Contracts() {
   const [contracts, setContracts] = useState([]);
   const classes = useStyles();
+  const { path } = useRouteMatch();
 
   useEffect(() => {
+    fetchContracts();
+  }, []);
+
+  const fetchContracts = () => {
     const contractQuery = {
       select: ["*", { issuedBy: ["username"] }],
       from: "contract",
@@ -36,7 +42,7 @@ export default function Contracts() {
             amount: contract.amount,
             startDate: contract.startDate,
             issuedBy: contract.issuedBy.username,
-            deliverables: contract.deliverables.join(" | "),
+            deliverables: contract.deliverables.join(", "),
           };
         });
         setContracts(flatContracts);
@@ -44,7 +50,8 @@ export default function Contracts() {
       .catch((err) => {
         console.log(err);
       });
-  }, []);
+
+  }
 
   return (
     <React.Fragment>
@@ -69,6 +76,13 @@ export default function Contracts() {
                 "deliverables",
               ]}
             />
+          </Paper>
+        </Grid>
+      )}
+      {path === "/dash/contracts" && (
+        <Grid item xs={12}>
+          <Paper className={classes.paper}>
+            <AddContract fetch={fetchContracts} />
           </Paper>
         </Grid>
       )}
