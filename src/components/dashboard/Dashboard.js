@@ -130,13 +130,13 @@ export default function Dashboard() {
   const userState = useContext(UserContext);
 
   useEffect(() => {
-    if (!userState.user) {
+    if (!userState.role) {
       const token = localStorage.getItem("authToken");
       if (token) {
         const { sub } = jwt.decode(token);
         console.log("token subject", sub);
         const userQuery = {
-          selectOne: [{ "_user/_auth": ["username"] }],
+          selectOne: [{ roles: ["id"] }],
           from: ["_auth/id", sub],
           opts: {
             compact: true,
@@ -145,14 +145,14 @@ export default function Dashboard() {
         flureeQuery(userQuery)
           .then((user) => {
             console.log("user", user);
-            userState.setInfo(user.data._user[0].username);
+            userState.setInfo(user.data.roles[0].id);
           })
           .catch((err) => {
             return err;
           });
       }
     }
-  }, [userState]);
+  });
 
   const handleDrawerOpen = () => {
     setOpen(true);

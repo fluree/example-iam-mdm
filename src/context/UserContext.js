@@ -5,14 +5,13 @@ export const UserContext = React.createContext();
 
 export default function UserInfo(props) {
   const [loggedIn, setLoggedIn] = useState(false);
-  const [user, setUser] = useState("");
+  const [role, setRole] = useState("");
 
   const history = useHistory();
 
   const logout = (key) => {
     localStorage.removeItem(key);
-    setLoggedIn(false);
-    setInfo("");
+    setRole("");
     history.push("/login");
   };
 
@@ -20,12 +19,12 @@ export default function UserInfo(props) {
     setLoggedIn(true);
   };
 
-  const setInfo = (username) => {
-    setUser(username);
+  const setInfo = (role) => {
+    setRole(role);
   };
 
   return (
-    <UserContext.Provider value={{ loggedIn, user, logout, login, setInfo }}>
+    <UserContext.Provider value={{ loggedIn, role, logout, login, setInfo }}>
       {props.children}
     </UserContext.Provider>
   );

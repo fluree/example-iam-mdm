@@ -2,11 +2,11 @@ import React, { useState, useEffect } from "react";
 import { useRouteMatch } from "react-router-dom";
 import { trackPromise, usePromiseTracker } from "react-promise-tracker";
 import { flureeQuery } from "../../../../utils/flureeFunctions";
-import Link from "@material-ui/core/Link";
 import { makeStyles } from "@material-ui/core/styles";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import TableView from "../../Tables/TableView";
 import AddClient from "./AddClient";
+import Title from "../../../Title";
 
 // Generate Order Data
 
