@@ -5,13 +5,13 @@ export const UserContext = React.createContext();
 
 export default function UserInfo(props) {
   const [loggedIn, setLoggedIn] = useState(false);
-  const [role, setRole] = useState("");
+  const [user, setUser] = useState({ role: "", id: 0 });
 
   const history = useHistory();
 
   const logout = (key) => {
     localStorage.removeItem(key);
-    setRole("");
+    setUser({ role: "", name: "" });
     history.push("/login");
   };
 
@@ -19,12 +19,12 @@ export default function UserInfo(props) {
     setLoggedIn(true);
   };
 
-  const setInfo = (role) => {
-    setRole(role);
+  const setInfo = (role, id) => {
+    setUser({ role: role, id: id });
   };
 
   return (
-    <UserContext.Provider value={{ loggedIn, role, logout, login, setInfo }}>
+    <UserContext.Provider value={{ loggedIn, user, logout, login, setInfo }}>
       {props.children}
     </UserContext.Provider>
   );

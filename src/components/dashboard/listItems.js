@@ -30,7 +30,7 @@ export function MainListItems() {
         </ListItemIcon>
         <ListItemText primary="Clients" />
       </ListItem>
-      {userState.role === "accounting" && (
+      {userState.user.role === "accounting" && (
         <ListItem button onClick={() => history.push(`${url}/accounts`)}>
           <ListItemIcon>
             <AccountBalanceIcon />
