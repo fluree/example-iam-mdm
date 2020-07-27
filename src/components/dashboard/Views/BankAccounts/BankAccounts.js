@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from "react";
+import {useRouteMatch} from "react-router-dom";
 import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
 import { makeStyles } from "@material-ui/core/styles";
 import TableView from "../../Tables/TableView";
+import AddBankAccount from "./AddBankAccount";
 
 import { flureeQuery } from "../../../../utils/flureeFunctions";
 
@@ -18,6 +20,7 @@ const useStyles = makeStyles((theme) => ({
 export default function BankAccounts() {
   const [accounts, setAccounts] = useState([]);
   const classes = useStyles();
+  const {path} = useRouteMatch();
 
   useEffect(() => {
     const bankQuery = {
@@ -56,6 +59,13 @@ export default function BankAccounts() {
               columns={["ID", "Owner", "Routing", "Account"]}
               values={["_id", "owner", "routingNum", "accountNum"]}
             />
+          </Paper>
+        </Grid>
+      )}
+      {path === "/dash/accounts" && (
+        <Grid item xs={12}>
+          <Paper className={classes.paper}>
+            <AddBankAccount />
           </Paper>
         </Grid>
       )}
