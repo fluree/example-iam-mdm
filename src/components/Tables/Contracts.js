@@ -6,6 +6,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import TableView from "./TableView";
 import AddContract from "../Forms/AddContract";
 import { flureeQuery } from "../../utils/flureeFunctions";
+import EditContract from "../Forms/EditContract";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -80,11 +81,18 @@ export default function Contracts() {
         </Grid>
       )}
       {path === "/dash/contracts" && (
-        <Grid item xs={12}>
-          <Paper className={classes.paper}>
-            <AddContract fetch={fetchContracts} />
-          </Paper>
-        </Grid>
+        <React.Fragment>
+          <Grid item xs={12}>
+            <Paper className={classes.paper}>
+              <AddContract fetch={fetchContracts} />
+            </Paper>
+          </Grid>
+          <Grid item xs={12}>
+            <Paper className={classes.paper}>
+              <EditContract fetch={fetchContracts} contracts={contracts} />
+            </Paper>
+          </Grid>
+        </React.Fragment>
       )}
     </React.Fragment>
   );
