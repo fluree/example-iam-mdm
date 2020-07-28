@@ -1,0 +1,36 @@
+[
+  {
+    "_id": "client$jimmy",
+    "name": "Jimmy James",
+    "email": "jj@wnyx.com",
+    "dealStage": ["customer"],
+    "bankAccount": ["bankAccount$jimmy"],
+    "account": 123456789,
+    "payment": ["payment$1", "payment$2"]
+  },
+  {
+    "_id": "client$dave",
+    "name": "Dave Nelson",
+    "email": "dave@wnyx.com",
+    "dealStage": ["prospect"],
+    "account": 987654321
+  },
+  {
+    "_id": "bankAccount$jimmy",
+    "routingNum": 555555555,
+    "accountNum": 493402958,
+    "owner": "client$jimmy"
+  },
+  {
+    "_id": "payment$1",
+    "amount": 513.47,
+    "bankAccount": "bankAccount$jimmy",
+    "date": 1595007398473
+  },
+  {
+    "_id": "payment$2",
+    "amount": 987.34,
+    "bankAccount": "bankAccount$jimmy",
+    "date": 1595007399473
+  }
+]

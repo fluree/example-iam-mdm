@@ -1,37 +1,46 @@
-import React from 'react';
-import clsx from 'clsx';
-import { makeStyles } from '@material-ui/core/styles';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import Drawer from '@material-ui/core/Drawer';
-import Box from '@material-ui/core/Box';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import List from '@material-ui/core/List';
-import Typography from '@material-ui/core/Typography';
-import Divider from '@material-ui/core/Divider';
-import IconButton from '@material-ui/core/IconButton';
-import Badge from '@material-ui/core/Badge';
-import Container from '@material-ui/core/Container';
-import Grid from '@material-ui/core/Grid';
-import Paper from '@material-ui/core/Paper';
-import Link from '@material-ui/core/Link';
-import MenuIcon from '@material-ui/icons/Menu';
-import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-import NotificationsIcon from '@material-ui/icons/Notifications';
-import { mainListItems, secondaryListItems } from './listItems';
-import Chart from './Chart';
-import Deposits from './Deposits';
-import Orders from './Orders';
+import React, { useContext, useState, useEffect } from "react";
+import jwt from "jsonwebtoken";
+import {
+  useHistory,
+  useRouteMatch,
+  Switch,
+  Route,
+} from "react-router-dom";
+import clsx from "clsx";
+import { makeStyles } from "@material-ui/core/styles";
+import CssBaseline from "@material-ui/core/CssBaseline";
+import Drawer from "@material-ui/core/Drawer";
+import Box from "@material-ui/core/Box";
+import AppBar from "@material-ui/core/AppBar";
+import Toolbar from "@material-ui/core/Toolbar";
+import Button from "@material-ui/core/Button";
+import List from "@material-ui/core/List";
+import Typography from "@material-ui/core/Typography";
+import Divider from "@material-ui/core/Divider";
+import IconButton from "@material-ui/core/IconButton";
+import Container from "@material-ui/core/Container";
+import Grid from "@material-ui/core/Grid";
+import Link from "@material-ui/core/Link";
+import MenuIcon from "@material-ui/icons/Menu";
+import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
+import { MainListItems } from "./listItems";
+import Overview from "./Overview";
+import { flureeQuery } from "../../utils/flureeFunctions";
+import { UserContext } from "../../context/UserContext";
+import Clients from "../Tables/Clients";
+import BankAccounts from "../Tables/BankAccounts";
+import Contracts from "../Tables/Contracts";
+import Payments from "../Tables/Payments";
 
 function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
-      {'Copyright © '}
+      {"Copyright © "}
       <Link color="inherit" href="https://material-ui.com/">
         Your Website
-      </Link>{' '}
+      </Link>{" "}
       {new Date().getFullYear()}
-      {'.'}
+      {"."}
     </Typography>
   );
 }
@@ -40,21 +49,21 @@ const drawerWidth = 240;
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    display: 'flex',
+    display: "flex",
   },
   toolbar: {
     paddingRight: 24, // keep right padding when drawer closed
   },
   toolbarIcon: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'flex-end',
-    padding: '0 8px',
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "flex-end",
+    padding: "0 8px",
     ...theme.mixins.toolbar,
   },
   appBar: {
     zIndex: theme.zIndex.drawer + 1,
-    transition: theme.transitions.create(['width', 'margin'], {
+    transition: theme.transitions.create(["width", "margin"], {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen,
     }),
@@ -62,7 +71,7 @@ const useStyles = makeStyles((theme) => ({
   appBarShift: {
     marginLeft: drawerWidth,
     width: `calc(100% - ${drawerWidth}px)`,
-    transition: theme.transitions.create(['width', 'margin'], {
+    transition: theme.transitions.create(["width", "margin"], {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.enteringScreen,
     }),
@@ -71,36 +80,36 @@ const useStyles = makeStyles((theme) => ({
     marginRight: 36,
   },
   menuButtonHidden: {
-    display: 'none',
+    display: "none",
   },
   title: {
     flexGrow: 1,
   },
   drawerPaper: {
-    position: 'relative',
-    whiteSpace: 'nowrap',
+    position: "relative",
+    whiteSpace: "nowrap",
     width: drawerWidth,
-    transition: theme.transitions.create('width', {
+    transition: theme.transitions.create("width", {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.enteringScreen,
     }),
   },
   drawerPaperClose: {
-    overflowX: 'hidden',
-    transition: theme.transitions.create('width', {
+    overflowX: "hidden",
+    transition: theme.transitions.create("width", {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen,
     }),
     width: theme.spacing(7),
-    [theme.breakpoints.up('sm')]: {
+    [theme.breakpoints.up("sm")]: {
       width: theme.spacing(9),
     },
   },
   appBarSpacer: theme.mixins.toolbar,
   content: {
     flexGrow: 1,
-    height: '100vh',
-    overflow: 'auto',
+    height: "100vh",
+    overflow: "auto",
   },
   container: {
     paddingTop: theme.spacing(4),
@@ -108,9 +117,9 @@ const useStyles = makeStyles((theme) => ({
   },
   paper: {
     padding: theme.spacing(2),
-    display: 'flex',
-    overflow: 'auto',
-    flexDirection: 'column',
+    display: "flex",
+    overflow: "auto",
+    flexDirection: "column",
   },
   fixedHeight: {
     height: 240,
@@ -120,6 +129,33 @@ const useStyles = makeStyles((theme) => ({
 export default function Dashboard() {
   const classes = useStyles();
   const [open, setOpen] = React.useState(true);
+  const userState = useContext(UserContext);
+
+  useEffect(() => {
+    if (!userState.user.role) {
+      const token = localStorage.getItem("authToken");
+      if (token) {
+        const { sub } = jwt.decode(token);
+        console.log("token subject", sub);
+        const userQuery = {
+          selectOne: [{"_user/_auth": ["_id"]}, { roles: ["id"] }],
+          from: ["_auth/id", sub],
+          opts: {
+            compact: true,
+          },
+        };
+        flureeQuery(userQuery)
+          .then((user) => {
+            console.log("user", user);
+            userState.setInfo(user.data.roles[0].id, user.data._user[0]._id);
+          })
+          .catch((err) => {
+            return err;
+          });
+      }
+    }
+  });
+
   const handleDrawerOpen = () => {
     setOpen(true);
   };
@@ -127,6 +163,13 @@ export default function Dashboard() {
     setOpen(false);
   };
   const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
+
+  const history = useHistory();
+  let { path } = useRouteMatch();
+
+  const logoutHandler = () => {
+    userState.logout("authToken");
+  };
 
   return (
     <div className={classes.root}>
@@ -143,7 +186,7 @@ export default function Dashboard() {
             onClick={handleDrawerOpen}
             className={clsx(
               classes.menuButton,
-              open && classes.menuButtonHidden,
+              open && classes.menuButtonHidden
             )}
           >
             <MenuIcon />
@@ -157,11 +200,9 @@ export default function Dashboard() {
           >
             Dashboard
           </Typography>
-          <IconButton color="inherit">
-            <Badge badgeContent={4} color="secondary">
-              <NotificationsIcon />
-            </Badge>
-          </IconButton>
+          <Button color="inherit" onClick={logoutHandler}>
+            Logout
+          </Button>
         </Toolbar>
       </AppBar>
       <Drawer
@@ -177,32 +218,31 @@ export default function Dashboard() {
           </IconButton>
         </div>
         <Divider />
-        <List>{mainListItems}</List>
-        <Divider />
-        <List>{secondaryListItems}</List>
+        <List>
+          <MainListItems />
+        </List>
       </Drawer>
       <main className={classes.content}>
         <div className={classes.appBarSpacer} />
         <Container maxWidth="lg" className={classes.container}>
           <Grid container spacing={3}>
-            {/* Chart */}
-            <Grid item xs={12} md={8} lg={9}>
-              <Paper className={fixedHeightPaper}>
-                <Chart />
-              </Paper>
-            </Grid>
-            {/* Recent Deposits */}
-            <Grid item xs={12} md={4} lg={3}>
-              <Paper className={fixedHeightPaper}>
-                <Deposits />
-              </Paper>
-            </Grid>
-            {/* Recent Orders */}
-            <Grid item xs={12}>
-              <Paper className={classes.paper}>
-                <Orders />
-              </Paper>
-            </Grid>
+            <Switch>
+              <Route exact path={`${path}/`}>
+                <Overview />
+              </Route>
+              <Route exact path={`${path}/clients`}>
+                <Clients />
+              </Route>
+              <Route exact path={`${path}/accounts`}>
+                <BankAccounts />
+              </Route>
+              <Route exact path={`${path}/contracts`}>
+                <Contracts />
+              </Route>
+              <Route exact path={`${path}/payments`}>
+                <Payments />
+              </Route>
+            </Switch>
           </Grid>
           <Box pt={4}>
             <Copyright />

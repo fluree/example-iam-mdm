@@ -1,7 +1,27 @@
 [
   {
-    "_id": "_fn?validEmail",
+    "_id": "_fn$validEmail",
     "name": "checkForValidEmail",
     "code": "(valid-email? (?o))"
+  },
+  {
+    "_id": "_fn$numMustBePositive",
+    "name": "numMustBePositive",
+    "code": "(>= (?o) 0)"
+  },
+  {
+    "_id": "_fn$isContractIssuedBy",
+    "name": "isContractIssuedBy",
+    "code": "(relationship? (?sid) [\"contract/issuedBy\" \"_user/auth\"] (?auth_id))"
+  },
+  {
+    "_id": "_fn$isClientCustomer",
+    "name": "isClientCustomer",
+    "code": "(relationship? (?sid) [\"client/dealStage\"] [\"_tag/id\", \"client/dealStage:[\\\"customer\\\"]\"])"
+  },
+  {
+    "_id": "_fn$canAddBankAccount",
+    "name": "canAddBankAccount",
+    "code": "(relationship? (?sid) [\"bankAccount/owner\", \"client/dealStage\"] [\"_tag/id\", \"client/dealStage:[\\\"customer\\\"]\"])"
   }
 ]

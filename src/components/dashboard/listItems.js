@@ -1,49 +1,58 @@
-import React from 'react';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
-import ListSubheader from '@material-ui/core/ListSubheader';
-import DashboardIcon from '@material-ui/icons/Dashboard';
-import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
-import PeopleIcon from '@material-ui/icons/People';
-import BarChartIcon from '@material-ui/icons/BarChart';
-import LayersIcon from '@material-ui/icons/Layers';
-import AssignmentIcon from '@material-ui/icons/Assignment';
+import React, { useContext } from "react";
+import { useHistory, useRouteMatch } from "react-router-dom";
+import ListItem from "@material-ui/core/ListItem";
+import ListItemIcon from "@material-ui/core/ListItemIcon";
+import ListItemText from "@material-ui/core/ListItemText";
+import ListSubheader from "@material-ui/core/ListSubheader";
+import DashboardIcon from "@material-ui/icons/Dashboard";
+import PeopleIcon from "@material-ui/icons/People";
+import AccountBalanceIcon from "@material-ui/icons/AccountBalance";
+import AssignmentIcon from "@material-ui/icons/Assignment";
+import LocalAtmIcon from "@material-ui/icons/LocalAtm";
+import { UserContext } from "../../context/UserContext";
 
-export const mainListItems = (
-  <div>
-    <ListItem button>
-      <ListItemIcon>
-        <DashboardIcon />
-      </ListItemIcon>
-      <ListItemText primary="Dashboard" />
-    </ListItem>
-    <ListItem button>
-      <ListItemIcon>
-        <ShoppingCartIcon />
-      </ListItemIcon>
-      <ListItemText primary="Orders" />
-    </ListItem>
-    <ListItem button>
-      <ListItemIcon>
-        <PeopleIcon />
-      </ListItemIcon>
-      <ListItemText primary="Customers" />
-    </ListItem>
-    <ListItem button>
-      <ListItemIcon>
-        <BarChartIcon />
-      </ListItemIcon>
-      <ListItemText primary="Reports" />
-    </ListItem>
-    <ListItem button>
-      <ListItemIcon>
-        <LayersIcon />
-      </ListItemIcon>
-      <ListItemText primary="Integrations" />
-    </ListItem>
-  </div>
-);
+export function MainListItems() {
+  const history = useHistory();
+  const userState = useContext(UserContext);
+  const { url } = useRouteMatch();
+
+  return (
+    <div>
+      <ListItem button onClick={() => history.push(`/dash`)}>
+        <ListItemIcon>
+          <DashboardIcon />
+        </ListItemIcon>
+        <ListItemText primary="Dashboard" />
+      </ListItem>
+      <ListItem button onClick={() => history.push(`${url}/clients`)}>
+        <ListItemIcon>
+          <PeopleIcon />
+        </ListItemIcon>
+        <ListItemText primary="Clients" />
+      </ListItem>
+      {userState.user.role === "accounting" && (
+        <ListItem button onClick={() => history.push(`${url}/accounts`)}>
+          <ListItemIcon>
+            <AccountBalanceIcon />
+          </ListItemIcon>
+          <ListItemText primary="Bank Accounts" />
+        </ListItem>
+      )}
+      <ListItem button onClick={() => history.push(`${url}/contracts`)}>
+        <ListItemIcon>
+          <AssignmentIcon />
+        </ListItemIcon>
+        <ListItemText primary="Contracts" />
+      </ListItem>
+      <ListItem button onClick={() => history.push(`${url}/payments`)}>
+        <ListItemIcon>
+          <LocalAtmIcon />
+        </ListItemIcon>
+        <ListItemText primary="Payments" />
+      </ListItem>
+    </div>
+  );
+}
 
 export const secondaryListItems = (
   <div>

@@ -12,7 +12,8 @@
   {
     "_id": "_collection",
     "name": "contract",
-    "doc": "clients' contract data"
+    "doc": "clients' contract data",
+    "spec": [["_fn/name", "isContractIssuedBy"]]
   },
   {
     "_id": "_collection",
@@ -37,6 +38,12 @@
   },
   {
     "_id": "_predicate",
+    "name": "client/account",
+    "type": "int",
+    "unique": true
+  },
+  {
+    "_id": "_predicate",
     "name": "client/bankAccount",
     "type": "ref",
     "restrictCollection": "bankAccount",
@@ -58,8 +65,7 @@
   {
     "_id": "_predicate",
     "name": "bankAccount/routingNum",
-    "type": "int",
-    "unique": true
+    "type": "int"
   },
   {
     "_id": "_predicate",
@@ -75,7 +81,14 @@
   {
     "_id": "_predicate",
     "name": "contract/amount",
-    "type": "float"
+    "type": "float",
+    "spec": [["_fn/name", "numMustBePositive"]]
+  },
+  {
+    "_id": "_predicate",
+    "name": "contract/issuedBy",
+    "type": "ref",
+    "restrictCollection": "_user"
   },
   {
     "_id": "_predicate",
@@ -105,13 +118,34 @@
     "type": "instant"
   },
   {
-    "_id": "_role?accountant",
-    "id": "accountant",
-    "rules": [["_rule/id", "root"]]
+    "_id": "_role?accounting",
+    "id": "accounting",
+    "rules": [
+      ["_rule/id", "accountingBankQuery"],
+      ["_rule/id", "accountingBankTransact"],
+      ["_rule/id", "accountingPayment"],
+      ["_rule/id", "accountingContract"],
+      ["_rule/id", "accountingQueryClient"],
+      ["_rule/id", "accountingTransactClient"],
+      ["_rule/id", "canAccessAuth"],
+      ["_rule/id", "canAccessRoleName"],
+      ["_rule/id", "canAccessUsername"],
+      ["_rule/id", "canCreateTag"]
+    ]
   },
   {
-    "_id": "_role?marketer",
-    "id": "marketer",
-    "rules": [["_rule/id", "root"]]
+    "_id": "_role?sales",
+    "id": "sales",
+    "rules": [
+      ["_rule/id", "salesQueryClient"],
+      ["_rule/id", "salesTransactClient"],
+      ["_rule/id", "salesNoBankAccess"],
+      ["_rule/id", "salesPayment"],
+      ["_rule/id", "salesContract"],
+      ["_rule/id", "canAccessAuth"],
+      ["_rule/id", "canAccessRoleName"],
+      ["_rule/id", "canAccessUsername"],
+      ["_rule/id", "canCreateTag"]
+    ]
   }
 ]
