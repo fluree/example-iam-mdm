@@ -39,7 +39,6 @@ export default function Addcontract(props) {
     deliverables: "",
   });
 
-
   const [error, setError] = useState("");
 
   useEffect(() => {
@@ -103,11 +102,11 @@ export default function Addcontract(props) {
         <MuiPickersUtilsProvider utils={DateFnsUtils}>
           <DatePicker label="StartDate" value={startDate} onChange={setStart} />
         </MuiPickersUtilsProvider>
-        <FormControl className={classes.formControl}>
-          <InputLabel id="stage-label">Client</InputLabel>
+        <FormControl>
+          <InputLabel id="client-label">Client</InputLabel>
           <Select
-            labelId="stage-label"
-            id="client-stage-select"
+            labelId="client-label"
+            id="client-select"
             name="client"
             value={form.client}
             onChange={changeHandler}
