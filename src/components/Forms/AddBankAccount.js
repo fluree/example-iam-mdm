@@ -7,6 +7,7 @@ import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
 import IconButton from "@material-ui/core/IconButton";
 import AddIcon from "@material-ui/icons/Add";
+import Alert from "@material-ui/lab/alert";
 import Title from "../Title";
 import { flureeTransact, flureeQuery } from "../../utils/flureeFunctions";
 
@@ -22,7 +23,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function AddBankAccount() {
+export default function AddBankAccount(props) {
   const classes = useStyles();
   const [clients, setClients] = useState([]);
   const [form, setForm] = useState({
@@ -30,6 +31,7 @@ export default function AddBankAccount() {
     accountNum: "",
     routingNum: "",
   });
+  const [error, setError] = useState("");
 
   const changeHandler = (e) => {
     setForm({
@@ -57,6 +59,7 @@ export default function AddBankAccount() {
 
   const submitHandler = (e) => {
     e.preventDefault();
+    setError("");
     const newAccount = [
       {
         _id: "bankAccount#new",
@@ -68,9 +71,12 @@ export default function AddBankAccount() {
     flureeTransact(newAccount)
       .then((res) => {
         console.log("add bank", res);
+        props.fetch();
+        setForm({ owner: "", accountNum: "", routingNum: "" });
       })
       .catch((err) => {
         console.log("add bank", err);
+        setError(err.response.data.message);
       });
   };
 
@@ -112,6 +118,7 @@ export default function AddBankAccount() {
           <AddIcon color="primary" />
         </IconButton>
       </form>
+      {error && <Alert severity="error">{error}</Alert>}
     </React.Fragment>
   );
 }

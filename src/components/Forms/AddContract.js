@@ -7,6 +7,7 @@ import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
 import IconButton from "@material-ui/core/IconButton";
 import AddIcon from "@material-ui/icons/Add";
+import Alert from "@material-ui/lab/alert";
 import DateFnsUtils from "@date-io/date-fns";
 import { DatePicker, MuiPickersUtilsProvider } from "@material-ui/pickers";
 import Title from "../Title";
@@ -28,17 +29,15 @@ const useStyles = makeStyles((theme) => ({
 export default function Addcontract(props) {
   const classes = useStyles();
   const user = useContext(UserContext);
+
   const [startDate, setStart] = useState(new Date());
-
   const [clients, setClients] = useState([]);
-
   const [form, setForm] = useState({
-    client: clients[0] || 0,
+    client: "",
     amount: "",
     startDate: "",
     deliverables: "",
   });
-
   const [error, setError] = useState("");
 
   useEffect(() => {
@@ -67,6 +66,7 @@ export default function Addcontract(props) {
 
   const submitHandler = (e) => {
     e.preventDefault();
+    setError("");
     const newcontract = [
       {
         _id: "contract$new",
@@ -88,10 +88,13 @@ export default function Addcontract(props) {
           amount: "",
           startDate: "",
           deliverables: "",
+          client: "",
         });
       })
       .catch((err) => {
-        console.log(err);
+        // debugger;
+        console.log(err.response.data.message);
+        setError(err.response.data.message);
       });
   };
 
@@ -136,6 +139,7 @@ export default function Addcontract(props) {
           <AddIcon color="primary" />
         </IconButton>
       </form>
+      {error && <Alert severity="error">{error}</Alert>}
     </React.Fragment>
   );
 }

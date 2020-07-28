@@ -6,6 +6,7 @@ import InputLabel from "@material-ui/core/InputLabel";
 import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
 import IconButton from "@material-ui/core/IconButton";
+import Alert from "@material-ui/lab/alert";
 import AddIcon from "@material-ui/icons/Add";
 import DateFnsUtils from "@date-io/date-fns";
 import { DatePicker, MuiPickersUtilsProvider } from "@material-ui/pickers";
@@ -26,13 +27,14 @@ const useStyles = makeStyles((theme) => ({
 
 export default function AddPayment(props) {
   const classes = useStyles();
-  const [selectedDate, setDate] = useState(new Date());
 
+  const [selectedDate, setDate] = useState(new Date());
   const [accounts, setAccounts] = useState([]);
   const [form, setForm] = useState({
     amount: "",
     bankAccount: "",
   });
+  const [error, setError] = useState("");
 
   useEffect(() => {
     if (accounts.length === 0) {
@@ -69,6 +71,7 @@ export default function AddPayment(props) {
 
   const submitHandler = (e) => {
     e.preventDefault();
+    setError("");
     const newPayment = [
       {
         _id: "payment$new",
@@ -87,13 +90,15 @@ export default function AddPayment(props) {
       .then((res) => {
         console.log(res);
         props.fetch();
-        // setForm({
-        //   amount: "",
-        //   bankAccount: [],
-        // });
+        setForm({
+          amount: "",
+          bankAccount: "",
+        });
+        setDate(new Date());
       })
       .catch((err) => {
         console.log(err);
+        setError(err.response.data.message);
       });
   };
 
@@ -126,16 +131,13 @@ export default function AddPayment(props) {
           </Select>
         </FormControl>
         <MuiPickersUtilsProvider utils={DateFnsUtils}>
-          <DatePicker
-            label="StartDate"
-            value={selectedDate}
-            onChange={setDate}
-          />
+          <DatePicker label="Date" value={selectedDate} onChange={setDate} />
         </MuiPickersUtilsProvider>
         <IconButton className={classes.submitButton} type="submit">
           <AddIcon color="primary" />
         </IconButton>
       </form>
+      {error && <Alert severity="error">{error}</Alert>}
     </React.Fragment>
   );
 }

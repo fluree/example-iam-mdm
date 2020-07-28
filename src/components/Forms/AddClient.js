@@ -7,6 +7,7 @@ import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
 import IconButton from "@material-ui/core/IconButton";
 import AddIcon from "@material-ui/icons/Add";
+import Alert from "@material-ui/lab/alert";
 import Title from "../Title";
 import { flureeTransact } from "../../utils/flureeFunctions";
 
@@ -43,6 +44,7 @@ export default function AddClient(props) {
 
   const submitHandler = (e) => {
     e.preventDefault();
+    setError("")
     const newClient = [
       {
         _id: "client#new",
@@ -60,6 +62,7 @@ export default function AddClient(props) {
       })
       .catch((err) => {
         console.log(err);
+        setError(err.response.data.message);
       });
   };
 
@@ -103,6 +106,7 @@ export default function AddClient(props) {
           <AddIcon color="primary" />
         </IconButton>
       </form>
+      {error && <Alert severity="error">{error}</Alert>}
     </React.Fragment>
   );
 }
