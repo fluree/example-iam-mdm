@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { useRouteMatch } from "react-router-dom";
 import TableView from "./TableView";
 import Grid from "@material-ui/core/Grid";
@@ -6,6 +6,7 @@ import Paper from "@material-ui/core/Paper";
 import { makeStyles } from "@material-ui/core/styles";
 import { flureeQuery } from "../../utils/flureeFunctions";
 import AddPayment from "../Forms/AddPayment";
+import {UserContext} from "../../context/UserContext"
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -20,6 +21,7 @@ export default function Payments() {
   const classes = useStyles();
   const [payments, setPayments] = useState([]);
   const { path } = useRouteMatch();
+  const user = useContext(UserContext)
 
   const fetchPayments = () => {
     const paymentQuery = {
@@ -68,7 +70,7 @@ export default function Payments() {
           </Paper>
         </Grid>
       )}
-      {path === "/dash/payments" && (
+      {(path === "/dash/payments" && user.user.role === "accounting") && (
         <Grid item xs={12}>
           <Paper className={classes.paper}>
             <AddPayment fetch={fetchPayments} />
