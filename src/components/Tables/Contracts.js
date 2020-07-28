@@ -37,10 +37,11 @@ export default function Contracts() {
       .then((res) => {
         console.log("contract", res);
         const flatContracts = res.data.map((contract) => {
+          const displayDate = new Date(contract.startDate);
           return {
             _id: contract._id,
             amount: contract.amount,
-            startDate: contract.startDate,
+            startDate: displayDate.toLocaleDateString(),
             issuedBy: contract.issuedBy.username,
             deliverables: contract.deliverables.join(", "),
           };

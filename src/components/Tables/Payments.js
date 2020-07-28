@@ -38,7 +38,7 @@ export default function Payments() {
             _id: payment._id,
             amount: payment.amount,
             accountID: payment.bankAccount._id,
-            displayDate: displayDate.toDateString(),
+            displayDate: displayDate.toLocaleDateString(),
             date: payment.date,
           };
         });
