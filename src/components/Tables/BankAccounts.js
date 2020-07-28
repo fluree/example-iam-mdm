@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import {useRouteMatch} from "react-router-dom";
+import { useRouteMatch } from "react-router-dom";
 import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
 import { makeStyles } from "@material-ui/core/styles";
@@ -19,9 +19,9 @@ const useStyles = makeStyles((theme) => ({
 export default function BankAccounts() {
   const [accounts, setAccounts] = useState([]);
   const classes = useStyles();
-  const {path} = useRouteMatch();
+  const { path } = useRouteMatch();
 
-  useEffect(() => {
+  const fetchAccounts = () => {
     const bankQuery = {
       select: ["*", { owner: ["name"] }],
       from: "bankAccount",
@@ -45,6 +45,10 @@ export default function BankAccounts() {
       .catch((err) => {
         console.log(err);
       });
+  };
+
+  useEffect(() => {
+    fetchAccounts();
   }, []);
 
   return (
@@ -64,7 +68,7 @@ export default function BankAccounts() {
       {path === "/dash/accounts" && (
         <Grid item xs={12}>
           <Paper className={classes.paper}>
-            <AddBankAccount />
+            <AddBankAccount fetch={fetchAccounts} />
           </Paper>
         </Grid>
       )}
