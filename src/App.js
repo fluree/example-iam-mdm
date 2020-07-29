@@ -1,10 +1,8 @@
 import React, { useEffect, useContext } from "react";
 import { Switch, Route, useHistory, useLocation } from "react-router-dom";
-import jwt from "jsonwebtoken";
 import Dashboard from "./components/dashboard/Dashboard";
 import AuthForm from "./components/Authentication/AuthForm";
 import { UserContext } from "./context/UserContext";
-import { flureeQuery } from "./utils/flureeFunctions";
 
 function App() {
   const history = useHistory();

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useHistory } from "react-router-dom";
+import { useHistory, Link } from "react-router-dom";
 import {
   TextField,
   Button,
@@ -10,6 +10,7 @@ import {
   FormControl,
   FormControlLabel,
   FormLabel,
+  Typography,
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import {
@@ -144,7 +145,6 @@ function AuthForm(props) {
               </RadioGroup>
             </FormControl>
           )}
-
           <Button
             type="submit"
             disabled={
@@ -154,7 +154,15 @@ function AuthForm(props) {
             {props.register ? "Register" : "Login"}
           </Button>
         </form>
-        {/* </UserContext.Provider> */}
+        {props.register ? (
+          <Typography color="primary" component="span">
+            Already registered? <Link to="/login">Login</Link>
+          </Typography>
+        ) : (
+          <Typography color="primary" component="span">
+            Need to <Link to="/register">register?</Link>
+          </Typography>
+        )}
       </Paper>
     </Container>
   );

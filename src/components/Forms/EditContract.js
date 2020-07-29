@@ -44,7 +44,7 @@ export default function EditContract(props) {
       setForm({ _id, amount, deliverables });
       setStart(startDate);
     }
-  }, [currentContract]);
+  }, [currentContract, props.contracts]);
 
   const contractHandler = (e) => {
     setCurrent(e.target.value);
