@@ -59,6 +59,7 @@ export default function EditContract(props) {
 
   const submitHandler = (e) => {
     e.preventDefault();
+    setError("");
     const transaction = [
       {
         _id: form._id,
@@ -75,7 +76,7 @@ export default function EditContract(props) {
       })
       .catch((err) => {
         console.log(err.response);
-        setError(err.response.data.message)
+        setError(err.response.data.message);
       });
   };
 
