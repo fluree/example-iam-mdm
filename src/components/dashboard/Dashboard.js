@@ -1,7 +1,6 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useContext, useEffect } from "react";
 import jwt from "jsonwebtoken";
 import {
-  useHistory,
   useRouteMatch,
   Switch,
   Route,
@@ -162,9 +161,8 @@ export default function Dashboard() {
   const handleDrawerClose = () => {
     setOpen(false);
   };
-  const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
+  // const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
 
-  const history = useHistory();
   let { path } = useRouteMatch();
 
   const logoutHandler = () => {

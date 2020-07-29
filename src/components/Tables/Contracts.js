@@ -87,11 +87,13 @@ export default function Contracts() {
               <AddContract fetch={fetchContracts} />
             </Paper>
           </Grid>
-          <Grid item xs={12}>
-            <Paper className={classes.paper}>
-              <EditContract fetch={fetchContracts} contracts={contracts} />
-            </Paper>
-          </Grid>
+          {contracts.length !== 0 && (
+            <Grid item xs={12}>
+              <Paper className={classes.paper}>
+                <EditContract fetch={fetchContracts} contracts={contracts} />
+              </Paper>
+            </Grid>
+          )}
         </React.Fragment>
       )}
     </React.Fragment>

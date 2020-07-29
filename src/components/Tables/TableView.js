@@ -1,6 +1,4 @@
-import React, { useState } from "react";
-import Link from "@material-ui/core/Link";
-import { makeStyles } from "@material-ui/core/styles";
+import React from "react";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
@@ -10,25 +8,9 @@ import Title from "../Title";
 
 // Generate Order Data
 
-function preventDefault(event) {
-  event.preventDefault();
-}
 
-const useStyles = makeStyles((theme) => ({
-  seeMore: {
-    marginTop: theme.spacing(3),
-  },
-}));
 
 export default function TableView(props) {
-  const classes = useStyles();
-
-  const [showForm, setShowForm] = useState(false);
-
-  const clickHandler = (e) => {
-    console.log(e.target.id);
-  };
-
   return (
     <React.Fragment>
       <Title>{props.title}</Title>
