@@ -1,68 +1,35 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Fluree Master Data Management
 
-## Available Scripts
+Concepts covered:
 
-In the project directory, you can run:
+- Master Data Management
 
-### `npm start`
+  - Single version of truth
+  - Ease of uniformity of data across all users
+  - Data security
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+- Fluree-specific
+  - Smart functions
+    - Can be attached to predicates / collections, or attached to rules
+    - Resolve to true or false
+    - Q's/T's can only be completed if all executed smart functions resolve to true
+    - Errors only return on transactions
+    - Lack of error for queries is seen as privacy / security feature
+  - Rules
+    - Can be used to attach smart functions to specific collections and predicates
+    - Rules can be as simple as applying the built-in `true` smart function to a collection to allow access to data
+    - Can apply to queries, transactions, or both
+  - Roles
+    - A collection of rules that can be applied to a user
+    - `_role/rules` is where all of a specific type of user's data roles are aggregated
+    - Roles are generally associated with a user's `_auth` record
+  - `_user/auth`
+    - Using `pw/generate` endpoint with example transaction handles a lot of the plumbing for you
+    - `_user` subject is created, `_auth` subject is created
+    - if a role is specified in `pw/generate` transaction, the specified role will be referenced to the user's `_auth/roles` predicate
+  - Password API
+    - Method by which authentication is performed (JWT, `_auth/id`, `_auth/roles`)
+    - Use of public/private key style cryptographic signing for queries and transactions
+    - Private key is never stored, but is hashed anew with each query / transaction using a key encrypted in the JWT and `_auth/salt`, and then used to sign the query / transaction
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `npm run build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+This repo is a basic demo for some of Fluree's Master Data Management capabilities. Specifically,
