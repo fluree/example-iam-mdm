@@ -7,8 +7,6 @@ Two roles for this demo:
 - Accounting
 - Sales
 
-I feel like most of the rules regarding transactions / queries can be applied on this level, but would love to hear anybody else's input regarding that.
-
 ## Schema Notes
 
 ### `client` collection

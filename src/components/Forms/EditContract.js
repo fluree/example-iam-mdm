@@ -63,6 +63,10 @@ export default function EditContract(props) {
     const transaction = [
       {
         _id: form._id,
+        deliverables: null,
+      },
+      {
+        _id: form._id,
         amount: parseFloat(form.amount),
         deliverables: form.deliverables.split(","),
         startDate: Date.parse(startDate),
