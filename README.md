@@ -1,35 +1,11 @@
-# Fluree Master Data Management
+# Fluree MDM Demo
 
-Concepts covered:
+## Getting Started
 
-- Master Data Management
+This repos contains a simple React app that demonstrates a potential use case for using Fluree as the single source of truth for users with different roles in an organization using the Fluree password API, along with smart functions, rules, and roles. These tools can provide powerful security across an organization's data, allowing users to only access and transact the bits their role requires them to.
 
-  - Single version of truth
-  - Ease of uniformity of data across all users
-  - Data security
+Run `npm install` to install all of the dependencies for the demo app. This demo requires a local instance of Fluree to be running (v 0.15 or greater recommended). You can [get the latest version here](https://fluree-releases-public.s3.amazonaws.com/fluree-latest.zip#). Once that has been started using the shell command `./fluree_start.sh`, you can run `npm start` and play around with the app to check out how Fluree handles data permissions.
 
-- Fluree-specific
-  - Smart functions
-    - Can be attached to predicates / collections, or attached to rules
-    - Resolve to true or false
-    - Q's/T's can only be completed if all executed smart functions resolve to true
-    - Errors only return on transactions
-    - Lack of error for queries is seen as privacy / security feature
-  - Rules
-    - Can be used to attach smart functions to specific collections and predicates
-    - Rules can be as simple as applying the built-in `true` smart function to a collection to allow access to data
-    - Can apply to queries, transactions, or both
-  - Roles
-    - A collection of rules that can be applied to a user
-    - `_role/rules` is where all of a specific type of user's data roles are aggregated
-    - Roles are generally associated with a user's `_auth` record
-  - `_user/auth`
-    - Using `pw/generate` endpoint with example transaction handles a lot of the plumbing for you
-    - `_user` subject is created, `_auth` subject is created
-    - if a role is specified in `pw/generate` transaction, the specified role will be referenced to the user's `_auth/roles` predicate
-  - Password API
-    - Method by which authentication is performed (JWT, `_auth/id`, `_auth/roles`)
-    - Use of public/private key style cryptographic signing for queries and transactions
-    - Private key is never stored, but is hashed anew with each query / transaction using a key encrypted in the JWT and `_auth/salt`, and then used to sign the query / transaction
+## Going further
 
-This repo is a basic demo for some of Fluree's Master Data Management capabilities. Specifically,
+If you'd like a more hands-on experience, I'd reccomend forgoing the app altogether, and transacting the FlureeDB schema manually through the Fluree Admin dashboard. Using this method, you can choose to transact the [protected schema](./src/data/03-protected-schema.json), or an alternate [unprotected schema](./src/data/03-unprotected-schema.json). Using an API tool, you can manually make transactions and queries using JWT tokens to compare the behavior of the protected schema to the unprotected schema. For example, you can create a few sales users, and add some contracts. See what happens when you try to update a contract issued by another user in the protected schema vs. the unprotected schema.
