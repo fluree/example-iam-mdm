@@ -1,10 +1,6 @@
 import React, { useContext, useEffect } from "react";
 import jwt from "jsonwebtoken";
-import {
-  useRouteMatch,
-  Switch,
-  Route,
-} from "react-router-dom";
+import { useRouteMatch, Switch, Route } from "react-router-dom";
 import clsx from "clsx";
 import { makeStyles } from "@material-ui/core/styles";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -123,6 +119,10 @@ const useStyles = makeStyles((theme) => ({
   fixedHeight: {
     height: 240,
   },
+  userInfo: {
+    // margin: theme.spacing(1),
+    marginRight: theme.spacing(5),
+  },
 }));
 
 export default function Dashboard() {
@@ -137,7 +137,10 @@ export default function Dashboard() {
         const { sub } = jwt.decode(token);
         console.log("token subject", sub);
         const userQuery = {
-          selectOne: [{"_user/_auth": ["_id"]}, { roles: ["id"] }],
+          selectOne: [
+            { "_user/_auth": ["_id", "username"] },
+            { roles: ["id"] },
+          ],
           from: ["_auth/id", sub],
           opts: {
             compact: true,
@@ -146,7 +149,11 @@ export default function Dashboard() {
         flureeQuery(userQuery)
           .then((user) => {
             console.log("user", user);
-            userState.setInfo(user.data.roles[0].id, user.data._user[0]._id);
+            userState.setInfo(
+              user.data.roles[0].id,
+              user.data._user[0].username,
+              user.data._user[0]._id
+            );
           })
           .catch((err) => {
             return err;
@@ -154,6 +161,10 @@ export default function Dashboard() {
       }
     }
   });
+
+  const capitalize = (word) => {
+    return word[0].toUpperCase() + word.slice(1);
+  };
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -198,6 +209,15 @@ export default function Dashboard() {
           >
             Dashboard
           </Typography>
+          {userState.user.name && userState.user.role && (
+            <Typography
+              className={classes.userInfo}
+              component="span"
+              color="inherit"
+            >
+              {capitalize(userState.user.role)} - {userState.user.name}
+            </Typography>
+          )}
           <Button color="inherit" onClick={logoutHandler}>
             Logout
           </Button>

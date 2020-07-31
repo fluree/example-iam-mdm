@@ -11,7 +11,7 @@ export default function UserInfo(props) {
 
   const logout = (key) => {
     localStorage.removeItem(key);
-    setUser({ role: "", name: "" });
+    setUser({ role: "", name: "", id:"" });
     history.push("/login");
   };
 
@@ -19,8 +19,8 @@ export default function UserInfo(props) {
     setLoggedIn(true);
   };
 
-  const setInfo = (role, id) => {
-    setUser({ role: role, id: id });
+  const setInfo = (role, name, id) => {
+    setUser({ role: role, name: name, id: id });
   };
 
   return (
