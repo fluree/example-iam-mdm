@@ -100,7 +100,7 @@ function AuthForm(props) {
             name="email"
             className={classes.fields}
             value={formState.email}
-            label="Email"
+            label="Username"
             onChange={changeHandler}
           />
           <TextField
