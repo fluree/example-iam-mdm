@@ -2,9 +2,9 @@
 
 ## Getting Started
 
-This repos contains a simple React app that demonstrates a potential use case for using Fluree as the single source of truth for users with different roles in an organization using the Fluree password API, along with smart functions, rules, and roles. These tools can provide powerful security across an organization's data, allowing users to only access and transact the bits their role requires them to.
+This repos contains a simple React app that demonstrates a potential use case for using Fluree as the single source of truth for users with different roles in an organization using the Fluree password API, along with smart functions, rules, and roles. These tools can provide powerful security across an organization's data, allowing users to only access and transact the data their role requires them to.
 
-Run `npm install` to install all of the dependencies for the demo app. This demo requires a local instance of Fluree to be running (v 0.15 or greater recommended). You can [get the latest version here](https://fluree-releases-public.s3.amazonaws.com/fluree-latest.zip#). Once that has been started using the shell command `./fluree_start.sh`, you can run `npm start` and play around with the app to check out how Fluree handles data permissions.
+Run `npm install` to install all of the dependencies for the demo app. This demo requires a local instance of Fluree to be running (v 0.15 or greater recommended). You can [get the latest version here](https://fluree-releases-public.s3.amazonaws.com/fluree-latest.zip#). Once that has been started using the shell command `./fluree_start.sh`, you can run `npm start`, which will start up the app, and create a ledger called `example/mdm` in Fluree if one is not present. Play around with the app to check out how Fluree handles data permissions.
 
 ## Going further
 
