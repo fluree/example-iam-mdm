@@ -1,5 +1,10 @@
 import axios from "axios";
 
+const functions = require("../data/01-functions.json");
+const rules = require("../data/02-rules.json");
+const schema = require("../data/03-protected-schema.json");
+const seed = require("../data/04-seed.json");
+
 const port = process.env.REACT_APP_FLUREE_PORT || 8080;
 const ledger = process.env.REACT_APP_FLUREE_LEDGER || "example/mdm";
 const url = `http://localhost:${port}/fdb/${ledger}`;
@@ -76,24 +81,6 @@ export function flureeTransact(transactions) {
   });
 }
 
-// Check to see if ledger db exists in Fluree ledger
-export function lookForDbs() {
-  return axios
-    .post(`http://localhost:${port}/fdb/dbs`)
-    .then((res) => {
-      // console.log("looking for dbs", res.data[0]);
-      const database = res.data[0];
-      const dbName = ledger.split("/");
-      if (database.length === dbName.length) {
-        for (let i in database) {
-          if (database[i] !== dbName[i]) return false;
-        }
-        return true;
-      }
-    })
-    .catch((err) => console.log(err, "Fluree DB not found"));
-}
-
 /**
  * Register user in Fluree database using password auth API
  * @param {Array} user Array containing user object transactions
@@ -128,6 +115,69 @@ export function loginFlureeUser(user) {
     .catch((err) => {
       throw err;
     });
+}
+
+// Check to see if ledger db exists in Fluree ledger
+export function lookForDbs() {
+  return new Promise((resolve, reject) => {
+    axios
+      .post(`http://localhost:${port}/fdb/dbs`)
+      .then((res) => {
+        // console.log("looking for dbs", res.data[0]);
+        const databases = res.data;
+        const dbName = ledger.split("/");
+        for (let database of databases) {
+          if (database.length === dbName.length) {
+            if (database[0] === dbName[0] && database[1] === dbName[1]) {
+              return resolve(true);
+            }
+          }
+        }
+        return resolve(false);
+      })
+      .catch((err) => reject("Make sure you're running Fluree!"));
+  });
+  // return axios
+  //   .post(`http://localhost:${port}/fdb/dbs`)
+  //   .then((res) => {
+  //     // console.log("looking for dbs", res.data[0]);
+  //     const database = res.data[0];
+  //     const dbName = ledger.split("/");
+  //     if (database.length === dbName.length) {
+  //       for (let i in database) {
+  //         if (database[i] !== dbName[i]) return false;
+  //       }
+  //       return true;
+  //     }
+  //   })
+  //   .catch((err) => console.log(err, "Fluree DB not found"));
+}
+
+function delay(t, v) {
+  return new Promise(function (resolve) {
+    setTimeout(resolve.bind(null, v), t);
+  });
+}
+
+export function createNewDb(name) {
+  return new Promise((resolve, reject) => {
+    axios
+      .post(`http://localhost:${port}/fdb/new-db`, { "db/id": name })
+      .then((res) => resolve(res))
+      .catch((err) => reject(err));
+  });
+}
+
+export function bootstrapDb(name) {
+  console.log("is this working?");
+  return createNewDb(name)
+    .then((res) => delay(3000))
+    .then((res) => flureeTransact(functions))
+    .then((res) => flureeTransact(rules))
+    .then((res) => flureeTransact(schema))
+    .then((res) => flureeTransact(seed))
+    .then((res) => console.log("DB created!"))
+    .catch((err) => err);
 }
 
 export default instance;
