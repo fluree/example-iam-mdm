@@ -15,6 +15,17 @@ const theme = createMuiTheme({
     secondary: {
       main: "#4B56A5",
     },
+    text: {
+      primary: "#091133",
+      secondary: "#4B56A5",
+      disabled: "#5D6970",
+    },
+    action: {
+      hover: "#CEF1FF",
+    },
+  },
+  typography: {
+    fontFamily: ["Roboto Condensed"],
   },
 });
 
