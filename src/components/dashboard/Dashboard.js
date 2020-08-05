@@ -29,10 +29,10 @@ import Payments from "../Tables/Payments";
 
 function Copyright() {
   return (
-    <Typography variant="body2" color="textSecondary" align="center">
+    <Typography variant="body2" align="center">
       {"Copyright © "}
-      <Link color="inherit" href="https://material-ui.com/">
-        Your Website
+      <Link  href="https://flur.ee/">
+        Fluree PBC
       </Link>{" "}
       {new Date().getFullYear()}
       {"."}
