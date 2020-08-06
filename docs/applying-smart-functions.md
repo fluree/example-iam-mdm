@@ -30,6 +30,8 @@ The `numMustBePositive` smart function is applied to the `contract/amount` predi
 
 ## Rules & Roles
 
+A good starting place for learning about roles and rules in Fluree is the [official guide](https://docs.flur.ee/guides/identity/auth-records#user-and-auth-entities)
+
 Rules are another way you can apply a smart function to specific collections and/or predicates. The difference is that smart functions applied via a rule can be executed for transactions, queries, or both. In the demo schema, each rule grants explicit query or transaction access to a user with the built-in `true` smart function. Multiple smart functions can be associated with a rule, like in the `_rule` below:
 
 ```
