@@ -37,3 +37,5 @@ This function works very similar to the previous smart function, but it has to t
 ```
 
 This one is also very similar to the previous functions, but instead of attempting to traverse from the transacted subject's id to a static subject, it's traversing to the `issuedBy` user's auth record, and checking if the subject id of the record matches the auth id being passed to Fluree by the JSON web token (using the Password authentication API). If the id's match up, the function resolves to true, and the contract can be updated.
+
+Next, take a look at [how smart functions can be applied to the ledger schema](./applying-smart-functions.md)
