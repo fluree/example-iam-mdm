@@ -18,6 +18,8 @@ When creating a new user, it is important to include `create-user?: true` key/va
 
 If the transaction sent is successful, Fluree will then automatically create a new `_auth` record, and a new `_user` record with a reference to the `_auth` record referenced in the `_user/auth` predicate. The specified `_role` for the new user will be referenced in the `_auth/roles` predicate.
 
+## Logging in with an existing user
+
 Authenticating an existing user is as simple as sending an object containing the username and password to the `pw/login` endpoint to obtain a JWT.
 
 ```
