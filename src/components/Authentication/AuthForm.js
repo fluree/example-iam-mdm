@@ -155,11 +155,11 @@ function AuthForm(props) {
           </Button>
         </form>
         {props.register ? (
-          <Typography color="primary" component="span">
+          <Typography component="span">
             Already registered? <Link to="/login">Login</Link>
           </Typography>
         ) : (
-          <Typography color="primary" component="span">
+          <Typography component="span">
             Need to <Link to="/register">register?</Link>
           </Typography>
         )}
