@@ -2,26 +2,31 @@
   {
     "_id": "_fn$validEmail",
     "name": "checkForValidEmail",
-    "code": "(valid-email? (?o))"
+    "code": "(valid-email? (?o))",
+    "doc": "Checks if string is a valid email address format"
   },
   {
     "_id": "_fn$numMustBePositive",
     "name": "numMustBePositive",
-    "code": "(>= (?o) 0)"
+    "code": "(>= (?o) 0)",
+    "doc": "Returns false if ?o is a negative number"
   },
   {
     "_id": "_fn$isContractIssuedBy",
     "name": "isContractIssuedBy",
-    "code": "(relationship? (?sid) [\"contract/issuedBy\" \"_user/auth\"] (?auth_id))"
+    "code": "(relationship? (?sid) [\"contract/issuedBy\" \"_user/auth\"] (?auth_id))",
+    "doc": "Returns true if the user attempting the transaction is the user referenced in the `contract/issuedBy` predicate"
   },
   {
     "_id": "_fn$isClientCustomer",
     "name": "isClientCustomer",
-    "code": "(relationship? (?sid) [\"client/dealStage\"] [\"_tag/id\", \"client/dealStage:[\\\"customer\\\"]\"])"
+    "code": "(relationship? (?sid) [\"client/dealStage\"] [\"_tag/id\", \"client/dealStage:[\\\"customer\\\"]\"])",
+    "doc": "Returns true if the `client/dealStage` predicate references the `customer` tag"
   },
   {
     "_id": "_fn$canAddBankAccount",
     "name": "canAddBankAccount",
-    "code": "(relationship? (?sid) [\"bankAccount/owner\", \"client/dealStage\"] [\"_tag/id\", \"client/dealStage:[\\\"customer\\\"]\"])"
+    "code": "(relationship? (?sid) [\"bankAccount/owner\", \"client/dealStage\"] [\"_tag/id\", \"client/dealStage:[\\\"customer\\\"]\"])",
+    "doc": "Returns true if the client referenced in the `bankAccount/owner` predicate has a reference to the `customer` tag in the `client/dealStage` predicate"
   }
 ]
