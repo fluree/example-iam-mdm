@@ -25,7 +25,7 @@ const theme = createMuiTheme({
     },
   },
   typography: {
-    fontFamily: ["Roboto Condensed"],
+    fontFamily: ["Cooper Hewitt" ,"Roboto Condensed"],
   },
 });
 
