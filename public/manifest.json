@@ -1,6 +1,6 @@
 {
   "short_name": "Demo App",
-  "name": "Furee MDM Demo App",
+  "name": "Furee IAM / MDM Demo App",
   "icons": [
     {
       "src": "icon32x32.png",

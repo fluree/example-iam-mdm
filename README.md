@@ -1,4 +1,4 @@
-# Fluree MDM Demo
+# Fluree IAM / MDM Demo
 
 ## Getting Started
 
