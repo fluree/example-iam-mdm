@@ -25,7 +25,14 @@ const theme = createMuiTheme({
     },
   },
   typography: {
-    fontFamily: ["Cooper Hewitt" ,"Roboto Condensed"],
+    fontFamily: ["Cooper Hewitt", "Roboto Condensed"],
+  },
+  overrides: {
+    MuiSnackbarContent: {
+      root: {
+        backgroundColor: "#13C6FF",
+      },
+    },
   },
 });
 
