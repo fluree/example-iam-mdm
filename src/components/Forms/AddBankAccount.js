@@ -67,6 +67,10 @@ export default function AddBankAccount(props) {
         accountNum: parseInt(form.accountNum),
         routingNum: parseInt(form.routingNum),
       },
+      {
+        _id: form.owner,
+        bankAccount: ["bankAccount#new"],
+      },
     ];
     flureeTransact(newAccount)
       .then((res) => {
