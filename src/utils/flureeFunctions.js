@@ -176,7 +176,11 @@ export function bootstrapDb(name) {
     .then((res) => flureeTransact(rules))
     .then((res) => flureeTransact(schema))
     .then((res) => flureeTransact(seed))
-    .then((res) => console.log("DB created!"))
+    .then((res) => {
+      const message = "DB created";
+      console.log(message);
+      return message;
+    })
     .catch((err) => err);
 }
 
