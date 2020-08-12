@@ -68,7 +68,7 @@ export default function EditContract(props) {
       {
         _id: form._id,
         amount: parseFloat(form.amount),
-        deliverables: form.deliverables.split(","),
+        deliverables: form.deliverables.replace(" ", "").split(","),
         startDate: Date.parse(startDate),
       },
     ];
