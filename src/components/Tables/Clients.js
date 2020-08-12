@@ -37,7 +37,12 @@ export default function Clients() {
       flureeQuery(clientsQuery)
         .then((res) => {
           console.log(res);
-          setClients(res.data);
+          const cleanClients = res.data.map((client) => {
+            let status = client.dealStage.replace(/[\[\]"]/g, "");
+            status = status[0].toUpperCase() + status.slice(1);
+            return { ...client, dealStage: status };
+          });
+          setClients(cleanClients);
         })
         .catch((err) => {
           console.log(err);
@@ -70,7 +75,7 @@ export default function Clients() {
       {path === "/dash/clients" && (
         <Grid item xs={12}>
           <Paper className={classes.paper}>
-            <AddClient fetch={fetchClients}/>
+            <AddClient fetch={fetchClients} />
           </Paper>
         </Grid>
       )}
