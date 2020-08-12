@@ -31,10 +31,7 @@ function Copyright() {
   return (
     <Typography variant="body2" align="center">
       {"Copyright © "}
-      <Link  href="https://flur.ee/">
-        Fluree PBC
-      </Link>{" "}
-      {new Date().getFullYear()}
+      <Link href="https://flur.ee/">Fluree PBC</Link> {new Date().getFullYear()}
       {"."}
     </Typography>
   );
@@ -215,7 +212,9 @@ export default function Dashboard() {
               component="span"
               color="inherit"
             >
-              {capitalize(userState.user.role)} - {userState.user.name}
+              {capitalize(userState.user.role)} -{" "}
+              {userState.user.name[0].toUpperCase() +
+                userState.user.name.slice(1)}
             </Typography>
           )}
           <Button color="inherit" onClick={logoutHandler}>
