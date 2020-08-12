@@ -38,7 +38,7 @@ export default function Clients() {
         .then((res) => {
           console.log(res);
           const cleanClients = res.data.map((client) => {
-            let status = client.dealStage.replace(/[\[\]"]/g, "");
+            let status = client.dealStage.replace(/[[\]"]/g, "");
             status = status[0].toUpperCase() + status.slice(1);
             return { ...client, dealStage: status };
           });
