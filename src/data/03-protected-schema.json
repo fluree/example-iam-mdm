@@ -13,7 +13,8 @@
     "_id": "_collection",
     "name": "contract",
     "doc": "clients' contract data",
-    "spec": [["_fn/name", "isContractIssuedBy"]]
+    "spec": [["_fn/name", "isContractIssuedBy"]],
+    "specDoc": "Contract can only be updated by the user who issued it"
   },
   {
     "_id": "_collection",
