@@ -20,7 +20,8 @@
     "react-promise-tracker": "^2.1.0",
     "react-router-dom": "^5.2.0",
     "react-scripts": "^3.4.2",
-    "recharts": "^1.8.5"
+    "recharts": "^1.8.5",
+    "typeface-cooper-hewitt": "0.0.44"
   },
   "scripts": {
     "start": "react-scripts start",
