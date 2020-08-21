@@ -7,6 +7,8 @@ import App from "./App";
 import UserInfo from "./context/UserContext";
 import * as serviceWorker from "./serviceWorker";
 
+require("typeface-cooper-hewitt");
+
 const theme = createMuiTheme({
   palette: {
     primary: {
