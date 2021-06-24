@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { useHistory, Link } from "react-router-dom";
+import React, { useState } from 'react';
+import { useHistory, Link } from 'react-router-dom';
 import {
   TextField,
   Button,
@@ -11,12 +11,12 @@ import {
   FormControlLabel,
   FormLabel,
   Typography,
-} from "@material-ui/core";
-import { makeStyles } from "@material-ui/core/styles";
+} from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
 import {
   registerFlureeUser,
   loginFlureeUser,
-} from "../../utils/flureeFunctions";
+} from '../../utils/flureeFunctions';
 
 const useStyles = makeStyles((theme) => ({
   root: { marginTop: 100 },
@@ -25,8 +25,8 @@ const useStyles = makeStyles((theme) => ({
     // boxShadow: "2px 2px 2px #000000"
   },
   authForm: {
-    display: "flex",
-    flexDirection: "column",
+    display: 'flex',
+    flexDirection: 'column',
   },
   roleSelect: {
     marginTop: 10,
@@ -37,10 +37,10 @@ function AuthForm(props) {
   const classes = useStyles();
 
   const [formState, setFormState] = useState({
-    email: "",
-    password: "",
-    passConfirm: "",
-    role: "sales",
+    email: '',
+    password: '',
+    passConfirm: '',
+    role: 'sales',
   });
 
   const history = useHistory();
@@ -71,9 +71,9 @@ function AuthForm(props) {
         authToken = await registerFlureeUser({
           password: formState.password,
           user: formState.email,
-          "create-user?": true,
+          'create-user?': true,
           expire: 999999999,
-          roles: [["_role/id", formState.role]],
+          roles: [['_role/id', formState.role]],
         });
       } else {
         authToken = await loginFlureeUser({
@@ -82,9 +82,16 @@ function AuthForm(props) {
           expire: 999999999,
         });
       }
+      if (
+        authToken.response &&
+        authToken.response.status &&
+        authToken.response.status === 400
+      ) {
+        throw new Error(authToken.response.data.message);
+      }
       if (authToken) {
-        localStorage.setItem("authToken", authToken);
-        history.push("/dash");
+        localStorage.setItem('authToken', authToken);
+        history.push('/dash');
       }
     } catch (err) {
       console.log(err);
@@ -92,75 +99,75 @@ function AuthForm(props) {
   };
 
   return (
-    <Container className={classes.root} maxWidth="sm">
+    <Container className={classes.root} maxWidth='sm'>
       <Paper className={classes.formWrap} elevation={3}>
         {/* <UserContext.Provider value={user}> */}
         <form className={classes.authForm} onSubmit={submitHandler}>
           <TextField
-            name="email"
+            name='email'
             className={classes.fields}
             value={formState.email}
-            label="Username"
+            label='Username'
             onChange={changeHandler}
           />
           <TextField
-            name="password"
+            name='password'
             className={classes.fields}
             value={formState.password}
-            type="password"
-            label="Password"
+            type='password'
+            label='Password'
             onChange={changeHandler}
           />
           {props.register && (
             <TextField
-              name="passConfirm"
+              name='passConfirm'
               className={classes.fields}
               vaue={formState.passConfirm}
-              type="password"
-              label="Confirm Password"
+              type='password'
+              label='Confirm Password'
               onChange={changeHandler}
               error={!validPass()}
-              helperText={validPass() ? "" : "Passwords do not match"}
+              helperText={validPass() ? '' : 'Passwords do not match'}
             />
           )}
           {props.register && (
-            <FormControl component="fieldset" className={classes.roleSelect}>
-              <FormLabel component="legend">User Role</FormLabel>
+            <FormControl component='fieldset' className={classes.roleSelect}>
+              <FormLabel component='legend'>User Role</FormLabel>
               <RadioGroup
-                aria-label="user-role"
-                name="role1"
+                aria-label='user-role'
+                name='role1'
                 value={formState.role}
                 onChange={radioHandler}
               >
                 <FormControlLabel
-                  value="sales"
+                  value='sales'
                   control={<Radio />}
-                  label="Sales"
+                  label='Sales'
                 />
                 <FormControlLabel
-                  value="accounting"
+                  value='accounting'
                   control={<Radio />}
-                  label="Accounting"
+                  label='Accounting'
                 />
               </RadioGroup>
             </FormControl>
           )}
           <Button
-            type="submit"
+            type='submit'
             disabled={
-              (props.register && !validPass()) || formState.password === ""
+              (props.register && !validPass()) || formState.password === ''
             }
           >
-            {props.register ? "Register" : "Login"}
+            {props.register ? 'Register' : 'Login'}
           </Button>
         </form>
         {props.register ? (
-          <Typography component="span">
-            Already registered? <Link to="/login">Login</Link>
+          <Typography component='span'>
+            Already registered? <Link to='/login'>Login</Link>
           </Typography>
         ) : (
-          <Typography component="span">
-            Need to <Link to="/register">register?</Link>
+          <Typography component='span'>
+            Need to <Link to='/register'>register?</Link>
           </Typography>
         )}
       </Paper>

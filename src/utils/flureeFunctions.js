@@ -1,12 +1,12 @@
-import axios from "axios";
+import axios from 'axios';
 
-const functions = require("../data/01-functions.json");
-const rules = require("../data/02-rules.json");
-const schema = require("../data/03-protected-schema.json");
-const seed = require("../data/04-seed.json");
+const functions = require('../data/01-functions.json');
+const rules = require('../data/02-rules.json');
+const schema = require('../data/03-protected-schema.json');
+const seed = require('../data/04-seed.json');
 
-const port = process.env.REACT_APP_FLUREE_PORT || 8080;
-const ledger = process.env.REACT_APP_FLUREE_LEDGER || "example/mdm";
+const port = process.env.REACT_APP_FLUREE_PORT || 8090;
+const ledger = process.env.REACT_APP_FLUREE_LEDGER || 'example/mdm';
 const url = `http://localhost:${port}/fdb/${ledger}`;
 
 const instance = axios.create({
@@ -39,12 +39,12 @@ instance.interceptors.response.use(
  * @param {Object} query Object containing FlureeQL query
  */
 export function flureeQuery(query) {
-  const token = localStorage.getItem("authToken");
+  const token = localStorage.getItem('authToken');
   if (token) {
-    const authHeader = "Bearer " + token;
+    const authHeader = 'Bearer ' + token;
     return new Promise((resolve, reject) => {
       instance
-        .post("/query", query, { headers: { Authorization: authHeader } })
+        .post('/query', query, { headers: { Authorization: authHeader } })
         .then((res) => resolve(res))
         .catch((err) => reject(err));
     });
@@ -62,11 +62,11 @@ export function flureeQuery(query) {
  * @param {Array} transactions Should contain Objects, each representing a FlureeQL transaction
  */
 export function flureeTransact(transactions) {
-  const token = localStorage.getItem("authToken");
+  const token = localStorage.getItem('authToken');
   if (token) {
     return new Promise((resolve, reject) => {
       instance
-        .post("/transact", transactions, {
+        .post('/transact', transactions, {
           headers: { Authorization: `Bearer ${token}` },
         })
         .then((res) => resolve(res))
@@ -88,7 +88,7 @@ export function flureeTransact(transactions) {
  */
 export function registerFlureeUser(user) {
   return instance
-    .post("/pw/generate", user)
+    .post('/pw/generate', user)
     .then((res) => {
       const token = res.data;
       return token;
@@ -104,9 +104,9 @@ export function registerFlureeUser(user) {
  */
 export function loginFlureeUser(user) {
   return instance
-    .post("/pw/login", user)
+    .post('/pw/login', user)
     .then((res) => {
-      console.log("status", res.status);
+      console.log('status', res.status);
       if (res.status === 200) {
         const token = res.data;
         return token;
@@ -125,7 +125,7 @@ export function lookForDbs() {
       .then((res) => {
         // console.log("looking for dbs", res.data[0]);
         const databases = res.data;
-        const dbName = ledger.split("/");
+        const dbName = ledger.split('/');
         for (let database of databases) {
           if (database.length === dbName.length) {
             if (database[0] === dbName[0] && database[1] === dbName[1]) {
@@ -162,22 +162,28 @@ function delay(t, v) {
 export function createNewDb(name) {
   return new Promise((resolve, reject) => {
     axios
-      .post(`http://localhost:${port}/fdb/new-db`, { "db/id": name })
+      .post(`http://localhost:${port}/fdb/new-db`, { 'db/id': name })
       .then((res) => resolve(res))
       .catch((err) => reject(err));
   });
 }
 
 export function bootstrapDb(name) {
-  console.log("is this working?");
+  console.log('is this working?');
   return createNewDb(name)
     .then((res) => delay(3000))
     .then((res) => flureeTransact(functions))
+    .then((res) => delay(500))
+
     .then((res) => flureeTransact(rules))
+    .then((res) => delay(500))
+
     .then((res) => flureeTransact(schema))
+    .then((res) => delay(500))
+
     .then((res) => flureeTransact(seed))
     .then((res) => {
-      const message = "DB created";
+      const message = 'DB created';
       console.log(message);
       return message;
     })
